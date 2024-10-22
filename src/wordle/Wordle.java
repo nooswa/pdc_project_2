@@ -7,7 +7,7 @@ package wordle;
 public class Wordle {
     public static void main(String[] args) {
         boolean playAgain; 
-
+/*TEST COMMIT*/
        do{ 
         System.out.println("Welcome to Wordle!\n");
 

@@ -1,4 +1,5 @@
- package wordle;
+ package Logic;
+
 /**
  * @author Larissa Goh 18029695
  * @author Noor Swadi 22167422

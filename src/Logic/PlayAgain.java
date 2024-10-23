@@ -1,4 +1,4 @@
-package wordle;
+package Logic;
 /**
  * @author Noor Swadi 22167422
  * This class manages the 'play again' command after the game ends.

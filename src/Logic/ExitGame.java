@@ -1,5 +1,5 @@
 
-package wordle;
+package Logic;
 /**
  * @author Noor Swadi 22167422
  * This class manages the exit game command.

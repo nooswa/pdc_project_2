@@ -1,4 +1,4 @@
-package wordle;
+package Logic;
 
 /**
  * @author Larissa Goh 18029695

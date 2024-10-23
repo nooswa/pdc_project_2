@@ -1,4 +1,4 @@
-package wordle;
+package Logic;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -14,8 +14,7 @@ import java.sql.*;
 public class GameDB {
     private static Connection conn = null;
     private static final String url = "jdbc:derby:wordleDB;create=true"; 
-    private static final String dbusername = "wordleG";  
-    private static final  String dbpassword = "wordleG";   
+      
 
     public GameDB() {
         dbsetup();
@@ -24,7 +23,7 @@ public class GameDB {
     //Establish connection to Database
     public void dbsetup() {
         try {
-            conn = DriverManager.getConnection(url, dbusername, dbpassword);
+            conn = DriverManager.getConnection(url);
             Statement statement = conn.createStatement();
             String tableName = "UserInfo";
 
@@ -83,6 +82,6 @@ public class GameDB {
             System.out.println("Error updating score: " + ex.getMessage());
         }
     }
-}
+}/*pull attempt*/
 
 

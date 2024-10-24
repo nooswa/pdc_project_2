@@ -82,6 +82,6 @@ public class GameDB {
             System.out.println("Error updating score: " + ex.getMessage());
         }
     }
-}/*pull attempt*/
+}
 
 

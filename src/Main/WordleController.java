@@ -1,20 +1,36 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package Main;
 
-import Logic.WordList;
-import Logic.Score;
-import Logic.InputHandler;
-import Logic.ValidGuessList;
 import Logic.GameLogic;
+import Logic.InputHandler;
 import Logic.Rules;
+import Logic.Score;
+import Logic.ValidGuessList;
+import Logic.WordList;
+
+
 
 /**
- * @author Larissa Goh 18029695
- * @author Noor Swadi 22167422
- * Class containing the main method.
+ *
+ * @author noooo
+ * Call all necessary classes here to invoke in main 
  */
-public class Wordle {
+public class WordleController {
     
-
+    public WordleController(){
+        WordList wordList = new WordList(); // WordList Instance: contains list of words
+        wordList.initialiseSecretWord();
+        ValidGuessList validGuessList = new ValidGuessList(); // ValidGuessList Instance: Checks whether the player's guess is valid
+        Rules rules = new Rules();  // Rules instance: to print game rules
+        InputHandler inputProcessor = new InputHandler(rules, validGuessList);  // InputHandler Instance: to receive user input
+        GameLogic game = new GameLogic(secretWord, inputProcessor);  // GameLogic Instance: to load core game mechanics
+        Score score = new Score(); // Score instance: to manage and track stats   
+    }
+    
+    
     // This method initializes and starts a new game
     public void startNewGame() {
         System.out.println("Welcome to Wordle!\n");
@@ -47,3 +63,6 @@ public class Wordle {
 }
 
    
+
+    
+}

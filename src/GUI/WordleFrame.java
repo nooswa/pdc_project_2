@@ -1,6 +1,10 @@
 package GUI;
 
 
+import Main.Wordle;
+import Logic.WordList;
+import Logic.ValidGuessList;
+import Logic.CheckValidWord;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
@@ -10,7 +14,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-import Main.Wordle;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -20,18 +23,25 @@ import Main.Wordle;
 /**
  *
  * @author noooo
- * Provides the GUI
+ * Provides the main application window
  * 
  */
 public class WordleFrame extends javax.swing.JFrame {
 
-    
+   
     private Wordle wordleGame;
+    private WordlePanel wordlePanel;
+    private ValidGuessList validGuessList; // Use existing ValidGuessList
+    private WordList secretWord;
     /**
      * Creates new form WordleFrame
      */
     public WordleFrame() {
-        initComponents();
+        validGuessList = new ValidGuessList(); // Initialize your valid guess list
+        wordlePanel = new WordlePanel(this, validGuessList); // Pass valid guess list to WordlePanel
+        add(wordlePanel); // Add WordlePanel to the frame
+        wordlePanel.setVisible(true); // Show the panel
+        wordleGame = new Wordle(secretWord.getSecretWord()); // Assuming you have a method to get the target word
     }
 
     /**

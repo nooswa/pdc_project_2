@@ -6,17 +6,18 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-/**
- * @author Noor Swadi 22167422
- * This class reads a file of all possible 5-letter words in order to 
- * verify that the user's guess is valid word.
- */
 
+/**
+ * This class reads a file of all possible 5-letter words in order to 
+ * verify that the user's guess is a valid word.
+ */
 public class ValidGuessList {
 
     private final ArrayList<String> validWords;  // List to store valid guess words.
+    private final Random random = new Random();  // Random object to fetch random words
 
     // Constructor to initialise and load list of valid words.
     public ValidGuessList() { 
@@ -47,8 +48,18 @@ public class ValidGuessList {
             }
         }
     }
-     // Getter method for getValidWords to be accessed in other classes.
-   public List<String> getValidWords() {
-     return validWords;  
-  }
+    
+    // Method to return a random word from the list
+    public String getRandomWord() {
+        if (validWords.isEmpty()) {
+            return ""; // or handle this case differently if needed
+        }
+        int randomIndex = random.nextInt(validWords.size());
+        return validWords.get(randomIndex);
+    }
+
+    // Getter method for getValidWords to be accessed in other classes.
+    public List<String> getValidWords() {
+        return validWords;  
+    }
 }

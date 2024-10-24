@@ -16,7 +16,7 @@ public class CheckValidWord extends CheckUserInput {
     @Override
     public boolean check(String word) {
         // Validate the word by checking if it's in the list of valid words
-        boolean isValid = validGuessList.getValidWords().contains(word);
+        boolean isValid = validGuessList.getValidWords().contains(word.toUpperCase());
         
         // Prints response if word is not valid. 
         if (!isValid) {
@@ -26,4 +26,3 @@ public class CheckValidWord extends CheckUserInput {
         return isValid;
     }
 }
-

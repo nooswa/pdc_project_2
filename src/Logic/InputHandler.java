@@ -1,6 +1,5 @@
 package Logic;
 
-import Logic.CheckValidWord;
 import Logic.CheckLength;
 import Logic.CheckCharacters;
 import Logic.Rules;

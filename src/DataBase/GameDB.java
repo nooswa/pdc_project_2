@@ -4,85 +4,79 @@
  */
 package DataBase;
 
+import java.beans.Statement;
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author noooo
  */
-
-import java.sql.*;
-
 public class GameDB {
-    private static Connection conn = null;
-    private static final String url = "jdbc:derby:wordleDB;create=true"; 
-    private static final String dbusername = "wordleG";  
-    private static final  String dbpassword = "wordleG";   
 
+    private static final String username = "wordle2"; //DB username
+    private static final String password = "wordle2"; //DB password
+    private static final String URL = "jdbc:derby:wordleDB; create=true";  //URL of the DB host
+    private static Connection conn = null;
+   
+     
     public GameDB() {
-        dbsetup();
+        dbSetup();// Set up the database connection
     }
     
-    //Establish connection to Database
-    public void dbsetup() {
-        try {
-            conn = DriverManager.getConnection(url, dbusername, dbpassword);
-            Statement statement = conn.createStatement();
-            String tableName = "UserInfo";
+    // Show an error message if database connection fails
+    private void showDatabaseError() {
+        Object[] options = {"OK"};
+        JOptionPane.showOptionDialog(null, "Unable to connect to the database. "
+                + "Another instance may already be open. In embedded mode, only one process can access the Derby database. The application requires the database to function.",
+                "Database Connection Error", JOptionPane.OK_OPTION, JOptionPane.ERROR_MESSAGE, null, options, null);
+        System.exit(0);
+    }
 
-            if (!checkTableExisting(tableName)) {
-                statement.executeUpdate("CREATE TABLE " + tableName + " (userid VARCHAR(12), password VARCHAR(12), score INT)");
+    //Establish connection to database
+    private void dbSetup() {
+        try {
+            if (conn == null) {
+                conn = DriverManager.getConnection(URL, username, password);
+                System.out.println(URL + " get CONNECTED...");
+                System.out.println(getConn());
             }
-            statement.close();
-        } catch (Throwable e) {
-            System.out.println("Database setup error: " + e.getMessage());
+        } catch (SQLException ex) {// Handle SQL exceptions
+            System.out.println(ex.getMessage());
         }
     }
-
-    private boolean checkTableExisting(String newTableName) {
-        boolean flag = false;
+    
+    // Check if a specific table exists in the database
+    protected boolean checkTableExisting(String tableName) {
+        boolean tableExists = false;
         try {
-            DatabaseMetaData dbmd = conn.getMetaData();
-            ResultSet rsDBMeta = dbmd.getTables(null, null, null, null);
-            while (rsDBMeta.next()) {
-                String tableName = rsDBMeta.getString("TABLE_NAME");
-                if (tableName.compareToIgnoreCase(newTableName) == 0) {
-                    flag = true;
-                }
+            DatabaseMetaData dbMetaData = getConn().getMetaData();
+            ResultSet resultSet = dbMetaData.getTables(null, null, tableName.toUpperCase(), null);
+            tableExists = resultSet.next();
+            resultSet.close();
+        } catch (SQLException ex) { // Handle SQL exceptions
+            System.err.println("SQL Exception: " + ex.getMessage());
+        }
+        return tableExists;
+    }
+
+    public Connection getConn() {
+        return this.conn;
+    }
+    
+    // Close the database connection
+    public void closeConnections() {
+        if (conn != null) {
+            try {
+                conn.close();
+            } catch (SQLException ex) { // Handle SQL exceptions
+                System.out.println(ex.getMessage());
             }
-            rsDBMeta.close();
-        } catch (SQLException ex) {
-            System.out.println("Error checking table existence: " + ex.getMessage());
         }
-        return flag;
     }
 
-    public boolean checkName(String username, String password) {
-        try {
-            Statement statement = conn.createStatement();
-            ResultSet rs = statement.executeQuery("SELECT password, score FROM UserInfo WHERE userid = '" + username + "'");
-            if (rs.next()) {
-                String pass = rs.getString("password");
-                if (password.equals(pass)) {
-                    return true;
-                }
-            } else {
-                // User not found, insert new user
-                statement.executeUpdate("INSERT INTO UserInfo VALUES('" + username + "', '" + password + "', 0)");
-                return true;
-            }
-        } catch (SQLException ex) {
-            System.out.println("Error checking username: " + ex.getMessage());
-        }
-        return false;
-    }
-
-    public void updateScore(String username, int score) {
-        try {
-            Statement statement = conn.createStatement();
-            statement.executeUpdate("UPDATE UserInfo SET score=" + score + " WHERE userid='" + username + "'");
-        } catch (SQLException ex) {
-            System.out.println("Error updating score: " + ex.getMessage());
-        }
-    }
 }
-
-

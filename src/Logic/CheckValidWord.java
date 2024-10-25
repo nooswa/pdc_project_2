@@ -1,5 +1,7 @@
 package Logic;
 
+import Logic.CheckUserInput;
+
 /**
  * @author Larissa Goh 18029695
  * This class is a subclass of CheckUserInput and checks if a word is in the list of valid guesses.

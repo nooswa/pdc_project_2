@@ -1,0 +1,13 @@
+----------------------------------------------------------------
+Fri Oct 25 23:23:48 NZDT 2024:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-0192-c334-2892-000006f7f9d0 
+on database directory C:\Users\noooo\OneDrive - AUT University\COMP603\pdc_project_2\wordleDB with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@18ef96 
+Loaded from file:/C:/Users/noooo/OneDrive%20-%20AUT%20University/COMP603/pdc_project_2/lib/derby.jar
+java.vendor=Oracle Corporation
+java.runtime.version=11.0.23+7-LTS-222
+user.dir=C:\Users\noooo\OneDrive - AUT University\COMP603\pdc_project_2
+os.name=Windows 11
+os.arch=amd64
+os.version=10.0
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''

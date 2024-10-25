@@ -7,53 +7,33 @@ package DataBase;
 /**
  *
  * @author noooo
+ * TEMPORARY CLASS FOR TESTING
  */
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.List;
 
 public class DBTest {
-
     public static void main(String[] args) {
-        // Connect to the database and create a statement
-        try {
-            // Get your database connection here (update with your connection details)
-            Connection connection = DriverManager.getConnection("jdbc:derby:wordleDB;create=true", "wordle2", "wordle2");
-            Statement statement = connection.createStatement(); // Fixed statement creation
+        // Create an instance of WordsDB
+        WordsDB wordsDB = new WordsDB();
 
-            // Create an instance of WordleLists with the statement
-            WordleLists wordleLists = new WordleLists(statement);
-            
-            // Setup the lists (this includes table creation)
-            wordleLists.setupLists();
-            
-            // Load words from files (make this method public)
-            wordleLists.loadWordsFromFiles(); 
-            
-            // Test selecting a random word
-            String secretWord = wordleLists.getSecretWord();
-            if (secretWord != null) {
-                System.out.println("Secret word selected: " + secretWord);
-            } else {
-                System.out.println("Error: No secret word selected.");
-            }
+        // Test the database connection (ensure it's working)
+        System.out.println("Testing database connection...");
 
-            // Display valid words loaded
-            System.out.println("Valid words loaded: " + wordleLists.getValidWords().size());
-            for (String word : wordleLists.getValidWords()) {
-                System.out.println(word);
-            } // Close for loop
-            
-            // Close statement and connection
-            statement.close();
-            connection.close(); // Ensure to close the connection
+        // Retrieve valid words from the database
+        List<String> validWords = wordsDB.getValidWords();
+        System.out.println("Valid Words Loaded: " + validWords);
 
-        } catch (SQLException ex) {
-            System.err.println("SQL Exception: " + ex.getMessage());
-        } catch (Exception ex) {
-            System.err.println("Error: " + ex.getMessage());
+        // Test selecting a secret word
+        String secretWord = wordsDB.getSecretWord();
+        System.out.println("Secret Word Selected: " + secretWord);
+
+        // Display the contents of the valid guess list
+        System.out.println("Contents of Valid Guess List:");
+        for (String word : validWords) {
+            System.out.println(word);
         }
+
+        // Optionally, you could call other methods to test various functionalities
+        // For example, if you want to add words to the database, you can create a method for that
     }
 }
-

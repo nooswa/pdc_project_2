@@ -8,25 +8,32 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.sql.Statement;
 
 /**
  *
  * @author noooo
  */
-public class WordleLists extends WordleDB {
+
+public class WordsDB extends GameDB {
     private final List<String> validWords;  // List to store valid guess words.
     private String secretWord;  // The secret word for the game
+    private Statement statement; // Declare statement variable
 
-    public WordleLists(Statement statement) {
-        super(); // Call the constructor of WordleDB with statement
+    public WordsDB() {
+        super(); // Call the constructor of GameDB
         validWords = new ArrayList<>(); // Initialize the validWords list
-        setupLists(); // Set up the lists when initializing WordleLists
+        try {
+            this.statement = getConn().createStatement(); // Initialize the statement
+            setupLists(); // Set up the lists when initializing WordsDB
+        } catch (SQLException e) {
+            Logger.getLogger(WordsDB.class.getName()).log(Level.SEVERE, "Error creating statement", e);
+        }
     }
 
     protected void setupLists() {
@@ -39,8 +46,7 @@ public class WordleLists extends WordleDB {
             System.err.println("SQL Exception: " + ex.getMessage());
         }
     }
-    
-   
+
     protected void createValidGuessListTable() throws SQLException {
         createTableIfNotExists("ValidGuessList");
     }
@@ -58,7 +64,7 @@ public class WordleLists extends WordleDB {
     }
 
     protected boolean checkTableExisting(String tableName) {
-        return super.checkTableExisting(tableName); // Use the method from WordleDB
+        return super.checkTableExisting(tableName); // Use the method from GameDB
     }
 
     // Load valid guesses and words from their respective files.
@@ -79,9 +85,9 @@ public class WordleLists extends WordleDB {
                 }
             }
         } catch (IOException ex) {
-            Logger.getLogger(WordleLists.class.getName()).log(Level.SEVERE, "Failed to read the file: " + filePath, ex);
+            Logger.getLogger(WordsDB.class.getName()).log(Level.SEVERE, "Failed to read the file: " + filePath, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(WordleLists.class.getName()).log(Level.SEVERE, "SQL error while loading words into " + tableName, ex);
+            Logger.getLogger(WordsDB.class.getName()).log(Level.SEVERE, "SQL error while loading words into " + tableName, ex);
         }
     }
 
@@ -97,7 +103,7 @@ public class WordleLists extends WordleDB {
             try {
                 addWordToDatabase(word.toUpperCase(), tableName);
             } catch (SQLException ex) {
-                Logger.getLogger(WordleLists.class.getName()).log(Level.SEVERE, "Failed to insert word: " + word, ex);
+                Logger.getLogger(WordsDB.class.getName()).log(Level.SEVERE, "Failed to insert word: " + word, ex);
             }
         }
     }
@@ -115,10 +121,10 @@ public class WordleLists extends WordleDB {
             if (!words.isEmpty()) {
                 secretWord = words.get(new Random().nextInt(words.size()));
             } else {
-                Logger.getLogger(WordleLists.class.getName()).log(Level.SEVERE, "The word list is empty.");
+                Logger.getLogger(WordsDB.class.getName()).log(Level.SEVERE, "The word list is empty.");
             }
         } catch (IOException ex) {
-            Logger.getLogger(WordleLists.class.getName()).log(Level.SEVERE, "Failed to read the word list file.", ex);
+            Logger.getLogger(WordsDB.class.getName()).log(Level.SEVERE, "Failed to read the word list file.", ex);
         }
     }
 
@@ -132,6 +138,3 @@ public class WordleLists extends WordleDB {
         return secretWord;
     }
 }
-
-
-

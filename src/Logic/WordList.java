@@ -65,6 +65,10 @@ public class WordList {
     public void initialiseSecretWord() {
      selectRandomWord(); // Sets secret  word.
     }
+    
+    public void setSecretWord(String word) {
+    this.secretWord = word;
+}
 }
 
     

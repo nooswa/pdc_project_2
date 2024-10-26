@@ -65,4 +65,9 @@ public class HintsDisplay {
         }
         System.out.println();
     }
+    // Getter for feedback history (needed for testing)
+public List<String> getFeedbackHistory() {
+    return feedbackHistory;
+}
+
 }

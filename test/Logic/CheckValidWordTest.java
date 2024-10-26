@@ -7,6 +7,8 @@ import static org.junit.Assert.*;
 /**
  * @author Larissa Goh 18029695
  * Unit test for CheckValidWord class.
+ * This test class ensures that words from the ValidGuessList.txt are correctly identified as valid with the check
+ * method.
  */
 public class CheckValidWordTest {
     
@@ -36,4 +38,14 @@ public class CheckValidWordTest {
         System.out.println("Random valid word checked: '" + expectedWord + "' Result: " + result);
         assertEquals(expResult, result);
     }
+    
+    @Test
+    public void testCheck_InvalidWord() {
+        System.out.println("Checks if an invalid word is correctly identified as invalid");
+        String invalidWord = "azpla"; // using a word not in the list
+        boolean result = instance.check(invalidWord);
+        System.out.println("Invalid word checked: '" + invalidWord + "' Result: " + result);
+         assertFalse("Expected false for an invalid word not in the list", result);
+}
+
 }

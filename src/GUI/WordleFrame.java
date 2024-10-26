@@ -38,10 +38,10 @@ public class WordleFrame extends javax.swing.JFrame {
      */
     public WordleFrame() {
         validGuessList = new ValidGuessList(); // Initialize your valid guess list
-        wordlePanel = new WordlePanel(this, validGuessList); // Pass valid guess list to WordlePanel
+        wordlePanel = new WordlePanel(this); // Pass valid guess list to WordlePanel  ,  validGuessList
         add(wordlePanel); // Add WordlePanel to the frame
         wordlePanel.setVisible(true); // Show the panel
-        wordleGame = new Wordle(secretWord.getSecretWord()); // Assuming you have a method to get the target word
+        wordleGame = new Wordle(); // Assuming you have a method to get the target word secretWord.getSecretWord() secretWord.getSecretWord()
     }
 
     /**

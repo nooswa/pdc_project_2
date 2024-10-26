@@ -19,6 +19,8 @@ import Logic.WordList;
  * Call all necessary classes here to invoke in main 
  */
 public class WordleController {
+
+    private String secretWord;
     
     public WordleController(){
         WordList wordList = new WordList(); // WordList Instance: contains list of words

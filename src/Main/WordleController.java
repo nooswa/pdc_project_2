@@ -11,11 +11,6 @@ import Logic.Score;
 import Logic.ValidGuessList;
 import Logic.WordList;
 
-<<<<<<< HEAD
-
-
-=======
->>>>>>> 53e09875a0bd4473980a305cbbae13d265ef2cd2
 /**
  *
  * @author noooo

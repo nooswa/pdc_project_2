@@ -1,31 +1,25 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Logic;
 
-/**
- *
- * @author noooo
+/**@author Larissa Goh 18029695
+ * @author Noor Swadi 22167422
+ * Represents a player in the game, including their personal information and statistics.
  */
 public class Player {
-    
+
     private String fullname;
     private String email;
     private String password;
-    private int gamesPlayed;
-    private int gamesWon;
-    
-    // Constructor 
-    public Player(String fullname, String email, String password, int gamesPLayed, int gamesWon) {
+    private PlayerStats stats; // Encapsulate player statistics
+
+    // Constructor
+    public Player(String fullname, String email, String password, int gamesPlayed, int gamesWon) {
         this.fullname = fullname;
         this.email = email;
         this.password = password;
-        this.gamesPlayed = gamesPlayed;
-        this.gamesWon = gamesWon;
+        this.stats = new PlayerStats(gamesPlayed, gamesWon);
     }
 
-    // Getters and Setters
+    // Player information
     public String getFullname() {
         return fullname;
     }
@@ -50,23 +44,11 @@ public class Player {
         this.password = password;
     }
 
-    public int getGamesPlayed() {
-        return gamesPlayed;
+    public PlayerStats getStats() {
+        return stats;
     }
 
-    public void setGamesPlayed(int gamesPlayed) {
-        this.gamesPlayed = gamesPlayed;
+    public void setStats(PlayerStats stats) {
+        this.stats = stats;
     }
-
-    public int getGamesWon() {
-        return gamesWon;
-    }
-
-    public void setGamesWon(int gamesWon) {
-        this.gamesWon = gamesWon;
-    }
-    
-    
-
-    
 }

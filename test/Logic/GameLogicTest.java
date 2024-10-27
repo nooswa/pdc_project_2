@@ -47,7 +47,7 @@ public class GameLogicTest {
     @Before
     public void setUp() {
         // Initialise rules and validguesslist
-        rules = new Rules();  
+        Rules rules =  Rules.getInstance();
         validGuessList = new ValidGuessList();  
         inputHandler = new TestInputHandler(rules, validGuessList);
         gameLogic = new GameLogic(secretWord, inputHandler);

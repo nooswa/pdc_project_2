@@ -96,8 +96,8 @@ public class PlayerDB extends GameDB {
     protected void updateScore(Player player) {
         String updateQuery = "UPDATE PLAYERS SET GAMES_PLAYED = ?, GAMES_WON = ? WHERE EMAIL = ?";
         try ( var pstmt = getConn().prepareStatement(updateQuery)) {
-            pstmt.setInt(1, player.getGamesPlayed());
-            pstmt.setInt(2, player.getGamesWon());
+            pstmt.setInt(1, player.getStats().getGamesPlayed());
+            pstmt.setInt(2, player.getStats().getGamesWon());
             pstmt.setString(3, player.getEmail());
             pstmt.executeUpdate();
         } catch (SQLException ex) { // Handle SQL exceptions

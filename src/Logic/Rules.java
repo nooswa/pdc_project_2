@@ -3,13 +3,26 @@ package Logic;
 
 /**
  * @author Larissa Goh 18029695
- * This class displays the rules of the Wordle game. It displays on every first run
- * of the game unless the user requests it to be shown again.
+ * This class displays the rules of the Wordle game. It displays on every first run of the game unless
+ * the user requests it to be shown again. Changed to implement a singleton design pattern to prevent multiple 
+ * instances of Rules. 
+ * 
  */
 
 public class Rules {
     
+    private static Rules instance; // For single instance
     public boolean rulesDisplayed = false; // Tracks whether rules have been shown.
+    
+    private Rules() {}
+
+    // Provide global access to the instance
+    public static Rules getInstance() {
+        if (instance == null) { // First checks if the instance is created
+            instance = new Rules();
+        }
+        return instance;
+    }
     
     // Method to return rules
     public String getRules() {  

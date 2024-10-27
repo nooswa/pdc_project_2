@@ -24,7 +24,7 @@ public class Wordle {
 
         ValidGuessList validGuessList = new ValidGuessList(); // ValidGuessList Instance: Checks whether the player's guess is valid
 
-        Rules rules = new Rules();  // Rules instance: to print game rules
+        Rules rules =  Rules.getInstance();  // Rules instance  to print game rules
         rules.displayRulesFirstRun();  // Display the rules once at the start of the game
 
         InputHandler inputProcessor = new InputHandler(rules, validGuessList);  // InputHandler Instance: to receive user input
@@ -35,7 +35,7 @@ public class Wordle {
 
         game.startGame(6);  // Start the game with a 6 attempts
 
-        Score score = new Score(); // Score instance: to manage and track stats
+        Score score = Score.getInstance(); // Score instance: to manage and track stats
 
         score.recordGame(game); // Update stats after the game ends
     }

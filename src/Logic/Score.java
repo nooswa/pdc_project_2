@@ -1,6 +1,5 @@
 package Logic;
 
-import Logic.GameLogic;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -12,14 +11,24 @@ import java.util.logging.Logger;
 /**
  * @author Larissa Goh 18029695
  * This class records the players game stats such as number of games played, 
- * games won and the winning words in a file.
+ * games won and the winning words in a file. Changed to implement a singleton design pattern to prevent
+ * multiple instances of Score. 
  */
 public class Score { 
     
+    private static Score instance; // For single instance
     private int gamesPlayed = 0;  
     private int gamesWon = 0;     
     private final List<String> winningWords = new ArrayList<>();  
     
+    private Score() {}
+    
+    public static Score getInstance() { // Provide global access to the instance
+        if (instance == null) { // First checks if the instance is created
+            instance = new Score();
+        }
+        return instance;
+    }
 // Record the current game stats into the file
     public void recordGame(GameLogic game) {
         readScore();

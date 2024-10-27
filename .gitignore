@@ -1,1 +1,3 @@
-ECHO is on.
+build/
+dist/
+nbproject/private/

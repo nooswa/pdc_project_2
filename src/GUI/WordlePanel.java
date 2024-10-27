@@ -26,8 +26,9 @@ public class WordlePanel extends JPanel {
     private static final int LETTERS_PER_GUESS = 5;
 
     public WordlePanel(WordleFrame frame) {
-        this.targetWord = frame.getTargetWord().toUpperCase(); // Get target word from frame
-        this.validWords = frame.getValidWord(); // Get valid words from frame
+
+        // this.targetWord = frame.getTargetWord().toUpperCase(); // Get target word from frame
+        // this.validWords = frame.getValidWord(); // Get valid words from frame
         this.guesses = new String[GRID_SIZE][LETTERS_PER_GUESS];
         this.currentGuess = 0;
 
@@ -97,4 +98,5 @@ public class WordlePanel extends JPanel {
         g.drawRect(x, y, 60, 60);
         g.drawString(letter, x + 20, y + 40);
     }
+
 }

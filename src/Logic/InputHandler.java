@@ -1,7 +1,6 @@
 package Logic;
 
-import Logic.CheckLength;
-import Logic.CheckCharacters;
+
 import Logic.Rules;
 import java.util.Scanner;
 
@@ -16,17 +15,18 @@ public class InputHandler {
 
     private final Rules rules;
     private final Scanner scanner;
-    private final CheckValidWord checkValidWord;
-    private final CheckLength checkLength;
-    private final CheckCharacters checkCharacters;
-
+    private final CheckUserInput checkValidWord;
+    private final CheckUserInput checkLength;
+    private final CheckUserInput checkCharacters;
+    
     // Constructor to sets up the class with the rules and input validation checks.
     public InputHandler(Rules rules, ValidGuessList validGuessList) {
         this.rules = rules;
         this.scanner = new Scanner(System.in);
-        this.checkValidWord = new CheckValidWord(validGuessList);
-        this.checkLength = new CheckLength();
-        this.checkCharacters = new CheckCharacters();
+         // Using createValidator in CheckuserInput to create objects
+        this.checkValidWord = CheckUserInput.createValidator("validWord", validGuessList);
+        this.checkLength = CheckUserInput.createValidator("length", validGuessList);
+        this.checkCharacters = CheckUserInput.createValidator("characters", validGuessList);
     }
     
     // Constantly promps a user for a guess.

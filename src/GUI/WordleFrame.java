@@ -38,10 +38,18 @@ public class WordleFrame extends javax.swing.JFrame {
      */
     public WordleFrame() {
         validGuessList = new ValidGuessList(); // Initialize your valid guess list
-        wordlePanel = new WordlePanel(this, validGuessList); // Pass valid guess list to WordlePanel
+
+        wordlePanel = new WordlePanel(this); // Pass valid guess list to WordlePanel  ,  validGuessList
         add(wordlePanel); // Add WordlePanel to the frame
         wordlePanel.setVisible(true); // Show the panel
-        wordleGame = new Wordle(secretWord.getSecretWord()); // Assuming you have a method to get the target word
+        wordleGame = new Wordle(); // Assuming you have a method to get the target word secretWord.getSecretWord() secretWord.getSecretWord()
+        
+        
+        setTitle("Wordle Game");
+    setSize(400, 300);
+    setLocationRelativeTo(null); // Center the window on the screen
+    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    setVisible(true);
     }
 
     /**
@@ -56,6 +64,7 @@ public class WordleFrame extends javax.swing.JFrame {
         javax.swing.JButton playButton = new javax.swing.JButton();
         javax.swing.JButton loginButton = new javax.swing.JButton();
         javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
+        javax.swing.JButton loginButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Wordle");
@@ -81,31 +90,42 @@ public class WordleFrame extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Leelawadee", 1, 48)); // NOI18N
         jLabel1.setText("Wordle");
 
+        loginButton1.setFont(new java.awt.Font("Leelawadee UI", 1, 12)); // NOI18N
+        loginButton1.setText("Rules ");
+        loginButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loginButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(62, 62, 62)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(49, 49, 49)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(41, 41, 41)
                 .addComponent(loginButton, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(playButton, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(48, 48, 48))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(loginButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(42, 42, 42))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(69, 69, 69))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(59, 59, 59)
+                .addGap(63, 63, 63)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+                .addGap(34, 34, 34)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(loginButton)
                     .addComponent(playButton)
-                    .addComponent(loginButton))
-                .addGap(35, 35, 35))
+                    .addComponent(loginButton1))
+                .addContainerGap(43, Short.MAX_VALUE))
         );
 
         pack();
@@ -181,7 +201,7 @@ public class WordleFrame extends javax.swing.JFrame {
         JFrame loginFrame = new JFrame("Login");
         loginFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); 
         loginFrame.setSize(300, 200);
-        
+      
         
         JPanel loginPanel = new JPanel();
         loginFrame.add(loginPanel);
@@ -190,6 +210,10 @@ public class WordleFrame extends javax.swing.JFrame {
         
         loginFrame.setVisible(true);
     }//GEN-LAST:event_loginButtonActionPerformed
+
+    private void loginButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_loginButton1ActionPerformed
 
     
     // Example login validation method (replace with actual logic)

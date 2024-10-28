@@ -54,7 +54,7 @@ public class InputHandler {
         return false;  // No special command was entered.
     }
 
-    private boolean isValidInput(String input) {
+    public boolean isValidInput(String input) {
         // Use all validation checks.
         boolean isLengthValid = checkLength.check(input);
         boolean isCharactersValid = checkCharacters.check(input);

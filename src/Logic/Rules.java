@@ -14,7 +14,7 @@ public class Rules {
     private static Rules instance; // For single instance
     public boolean rulesDisplayed = false; // Tracks whether rules have been shown.
     
-    private Rules() {}
+    public Rules() {}
 
     // Provide global access to the instance
     public static Rules getInstance() {

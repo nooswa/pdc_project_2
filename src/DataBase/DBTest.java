@@ -6,7 +6,7 @@ package DataBase;
 
 /**
  *
- * @author noooo
+ * @author Noor Swadi 22167422
  * TEMPORARY CLASS FOR TESTING
  */
 import java.util.List;

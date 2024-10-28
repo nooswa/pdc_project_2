@@ -4,99 +4,90 @@
  */
 package GUI;
 
+import DataBase.WordsDB;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+
 /**
  *
  * @author noooo
  * Handles the game logic and user interactions
  */
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
-import java.util.HashSet;
 
 public class WordlePanel extends JPanel {
-    private String targetWord;
-    private HashSet<String> validWords;
-    private String[][] guesses;
-    private int currentGuess;
-    private JTextField inputField;
-    private JButton submitButton;
+    private final String secretWord;
+    private final WordsDB wordsDB;
+    private final LetterBox[][] letterBoxes;
+    private int attempt;
+    
+    public WordlePanel(String secretWord, WordsDB wordsDB) {
+        this.secretWord = secretWord;
+        this.wordsDB = wordsDB;
+        this.letterBoxes = new LetterBox[6][5];
+        this.attempt = 0;
 
-    private static final int GRID_SIZE = 6;
-    private static final int LETTERS_PER_GUESS = 5;
-
-    public WordlePanel(WordleFrame frame) {
-
-        // this.targetWord = frame.getTargetWord().toUpperCase(); // Get target word from frame
-        // this.validWords = frame.getValidWord(); // Get valid words from frame
-        this.guesses = new String[GRID_SIZE][LETTERS_PER_GUESS];
-        this.currentGuess = 0;
-
-        setLayout(new BorderLayout());
-        setPreferredSize(new Dimension(400, 400));
-
-        inputField = new JTextField();
-        submitButton = new JButton("Submit");
-
-        add(inputField, BorderLayout.NORTH);
-        add(submitButton, BorderLayout.SOUTH);
-
-        submitButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                submitGuess();
-            }
-        });
-
-        inputField.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                submitGuess();
-            }
-        });
+        setLayout(new GridLayout(7, 5, 5, 5));
+        initLetterBoxes();
+        initEnterButton();
     }
 
-    private void submitGuess() {
-        String guess = inputField.getText().toUpperCase().trim();
-        if (isValidGuess(guess)) {
-            guesses[currentGuess] = guess.split("");
-            currentGuess++;
-            inputField.setText("");
-
-            if (currentGuess >= GRID_SIZE) {
-                // Handle end of game (e.g., reveal the target word, disable input)
-            }
-        } else {
-            JOptionPane.showMessageDialog(this, "Invalid guess. Try again.");
-        }
-    }
-
-    private boolean isValidGuess(String guess) {
-        return validWords.contains(guess) && guess.length() == LETTERS_PER_GUESS;
-    }
-
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        drawGuesses(g);
-    }
-
-    private void drawGuesses(Graphics g) {
-        for (int i = 0; i < currentGuess; i++) {
-            for (int j = 0; j < LETTERS_PER_GUESS; j++) {
-                drawLetter(g, guesses[i][j], i, j);
+    private void initLetterBoxes() {
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 5; j++) {
+                letterBoxes[i][j] = new LetterBox();
+                add(letterBoxes[i][j]);
             }
         }
     }
 
-    private void drawLetter(Graphics g, String letter, int row, int col) {
-        int x = col * 70 + 10;
-        int y = row * 70 + 100;
-        g.setColor(Color.LIGHT_GRAY);
-        g.fillRect(x, y, 60, 60);
-        g.setColor(Color.BLACK);
-        g.drawRect(x, y, 60, 60);
-        g.drawString(letter, x + 20, y + 40);
+    private void initEnterButton() {
+        JButton enterButton = new JButton("Enter");
+        enterButton.addActionListener(new EnterButtonListener());
+        add(enterButton);
     }
 
+    private class EnterButtonListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if (attempt < 6) {
+                StringBuilder guess = new StringBuilder();
+                for (LetterBox box : letterBoxes[attempt]) {
+                    guess.append(box.getLetter());
+                }
+                
+                if (wordsDB.getValidWords().contains(guess.toString())) {
+                    checkGuess(guess.toString());
+                    attempt++;
+                } else {
+                    MessageDialog.showMessage("Invalid word. Try again!");
+                }
+            }
+        }
+    }
+
+    private void checkGuess(String guess) {
+        for (int i = 0; i < 5; i++) {
+            char guessedLetter = guess.charAt(i);
+            LetterBox box = letterBoxes[attempt][i];
+            
+            if (guessedLetter == secretWord.charAt(i)) {
+                box.setCorrect();
+            } else if (secretWord.contains(String.valueOf(guessedLetter))) {
+                box.setPartial();
+            } else {
+                box.setIncorrect();
+            }
+        }
+
+        if (guess.equals(secretWord)) {
+            MessageDialog.showMessage("Congratulations! You've guessed the word!");
+        } else if (attempt == 5) {
+            MessageDialog.showMessage("Game Over! The word was: " + secretWord);
+        }
+    }
 }
+
+

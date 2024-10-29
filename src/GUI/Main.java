@@ -75,7 +75,12 @@ public class Main extends JFrame {
         letterBox = new LetterBox();
         letterBox.setBounds(133, 130, LetterBox.WIDTH, LetterBox.HEIGHT);
         c.add(letterBox);
-
+        c.add (new SignUp());
+        
+        
+        SignUp signUpPanel = new SignUp();
+        signUpPanel.setBounds(50, 100, 500, 400); // Adjust size and position as needed
+        c.add(signUpPanel);
         // The title
         titleLabel = new JLabel("Wordle");
         titleLabel.setFont(new Font("Serif", Font.BOLD, 45));

@@ -1,19 +1,41 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package GUI;
 
-/**
- *
- * @author Noor Swadi 22167422
- * Method to launch the whole GUI
- */
+import javax.swing.JFrame;
+
 public class Start {
 
+    private static JFrame mainFrame;
+
     public static void main(String[] args) {
-        Main main = new Main();
-        main.myShow();
+        // Initialize the main frame
+        mainFrame = new JFrame("Wordle App");
+        mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        mainFrame.setSize(600, 400); // Set the preferred size
+        mainFrame.setLocationRelativeTo(null); // Center the window
+        
+        // Show the SignUp panel first
+        showSignUp();
+        
+        mainFrame.setVisible(true);
     }
 
+    public static void showSignUp() {
+        mainFrame.getContentPane().removeAll();
+        
+        SignUp signUpPanel = new SignUp();
+        mainFrame.add(signUpPanel);
+        
+        mainFrame.revalidate();
+        mainFrame.repaint();
+    }
+
+    public static void showSignIn() {
+        mainFrame.getContentPane().removeAll();
+        
+        SignIn signInPanel = new SignIn();
+        mainFrame.add(signInPanel);
+        
+        mainFrame.revalidate();
+        mainFrame.repaint();
+    }
 }

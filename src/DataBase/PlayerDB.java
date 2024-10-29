@@ -4,7 +4,7 @@
  */
 package DataBase;
 
-import Logic.Player;
+import GUI.model.Player;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;

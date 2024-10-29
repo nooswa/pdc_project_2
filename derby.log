@@ -1,6 +1,6 @@
 ----------------------------------------------------------------
-Wed Oct 30 11:25:33 NZDT 2024:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-0192-da62-60af-00000f504748 
+Wed Oct 30 11:31:48 NZDT 2024:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-0192-da68-1a2e-00000f809ac8 
 on database directory C:\Users\laris\OneDrive\Desktop\pdc_project_2-master\wordleDB with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@7aec35a 
 Loaded from file:/C:/Users/laris/OneDrive/Desktop/pdc_project_2-master/lib/derby.jar
 java.vendor=Oracle Corporation

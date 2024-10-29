@@ -131,7 +131,7 @@ class PopRes extends PopUpWindow{
             line4.setBounds(25, 150, 201, 30);
             c.add(line4);
         } else {
-            this.setTitle("Oh no");
+            this.setTitle("Oh no!");
             line1 = Main.makeLabel("Failed", "Serif", Font.BOLD, 40);
             line1.setForeground(new Color(121, 124, 126));
             JLabel line4 = Main.makeLabel("within 「 " + (Position.getRow() + 1) + " 」 tries", "Serif", Font.BOLD, 20);

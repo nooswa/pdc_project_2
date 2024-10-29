@@ -35,7 +35,7 @@ public interface Enter{
                 char current = box.getText().charAt(0); // Current letter in the box
                 int idx = answer.indexOf(current);      // Index of box letter in answer
                 if (answer.indexOf(current) != -1){    
-                    if (idx == i){      //--correct
+                    if (idx == i){      // Correct
                         cnt ++;
                         box.refresh(3);
                     }else{

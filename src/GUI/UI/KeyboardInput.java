@@ -11,7 +11,6 @@ import java.awt.event.KeyListener;
  * @author Noor Swadi 22167422
  * @author Larissa Goh 18029695
  */
-
 public class KeyboardInput implements KeyListener, AssessInput {
 
     private final LetterBox boxes;

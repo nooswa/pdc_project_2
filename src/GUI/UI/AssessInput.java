@@ -20,6 +20,8 @@ public interface AssessInput{
         int cnt = 0;        // Correct letter 
 
         String answer = words.getSecretWord();
+       // System.out.println("Secret Word: " + words.getSecretWord());
+        
         SingleBox box = null;
         String tobeCheck = new String("");  // Store current string for checkin
 

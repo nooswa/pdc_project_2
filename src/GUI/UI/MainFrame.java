@@ -87,7 +87,7 @@ public class MainFrame extends JFrame {
 
        
         jbArray[0] = new JButton("SHOW RULES");
-        jbArray[0].setFont(new Font("SansSerif", Font.PLAIN, 22));
+        jbArray[0].setFont(new Font("Segoe UI", Font.BOLD, 18));
         jbArray[0].setBounds(225, 560, 151, 50);
         c.add(jbArray[0]);
 

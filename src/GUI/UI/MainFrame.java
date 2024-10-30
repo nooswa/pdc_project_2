@@ -11,29 +11,27 @@ import java.awt.event.*;
 /**
  * This MainFrame class sets up the window for the main game logic and manages keyboard input 
  * 
- * @version Noor Swadi 22167422
- * @version Larissa Goh 18029695
+ * @author Noor Swadi 22167422
+ * @author Larissa Goh 18029695
  */
 public class MainFrame extends JFrame { 
     public static int WIDTH = 601;
     public static int HEIGHT = 680;
 
     private JLabel titleLabel = null;
-    private JLabel version = null;
     private LetterBox letterBox = null;
-    private final WordsDB words; // Make WordsDB final, so it’s passed once and reused
+    private final WordsDB words; 
     private JButton[] jbArray = null;
 
     KeyboardInput input;
-    private final Player player; // Make Player final
-    private final PlayerDB playerDB; // Make PlayerDB final to avoid re-initialization
+    private final Player player;
+    private final PlayerDB playerDB; 
 
     public MainFrame(Player player, PlayerDB playerDB, WordsDB words) { // Accept PlayerDB and WordsDB as parameters
         this.player = player;
-        this.playerDB = playerDB; // Reuse passed-in PlayerDB instance
-        this.words = words; // Reuse passed-in WordsDB instance
-        words.getValidWords(); // Load words only once, if not already loaded
-
+        this.playerDB = playerDB;
+        this.words = words; 
+        words.getValidWords(); 
         this.setTitle("Wordle");
         this.setSize(WIDTH, HEIGHT);
         this.setLocationRelativeTo(null); // Center the frame

@@ -10,21 +10,20 @@ import javax.swing.JOptionPane;
 /**
  * Database connection handler for Wordle game
  * Ensures a single connection is used across the application.
- * @author noooo
+ * @author Noor Swadi 22167422
  */
 public class GameDB {
 
     private static final String username = "wordle2"; // DB username
     private static final String password = "wordle2"; // DB password
     private static final String URL = "jdbc:derby:wordleDB;create=true"; // URL of the DB host
-    private static Connection conn = null; // Single, shared connection instance
+    private static Connection conn = null; // Singular shared connection
 
-    // Constructor
     public GameDB() {
         dbSetup(); // Set up the database connection
     }
 
-    // Display an error message if the database connection fails
+    // Show an error message if database connection fails
     private void showDatabaseError() {
         Object[] options = {"OK"};
         JOptionPane.showOptionDialog(null, "Unable to connect to the database. "
@@ -33,9 +32,9 @@ public class GameDB {
         System.exit(0);
     }
 
-    // Establish the connection to the database (only once)
+    //Establish connection to database
     private void dbSetup() {
-        if (conn == null) { // Only open the connection if it doesn't already exist
+        if (conn == null) { // Opens connection if it doesn't already exist
             try {
                 conn = DriverManager.getConnection(URL, username, password);
                 System.out.println(URL + " CONNECTED...");
@@ -46,10 +45,9 @@ public class GameDB {
         }
     }
 
-    // Get the single, shared connection
     public static Connection getConn() {
         if (conn == null) {
-            new GameDB(); // Initialize connection if not already initialized
+            new GameDB(); 
         }
         return conn;
     }
@@ -68,14 +66,14 @@ public class GameDB {
         return tableExists;
     }
 
-    // Close the database connection (called on application shutdown)
+    // Close the database connection 
     public static void closeConnection() {
         if (conn != null) {
             try {
                 conn.close();
                 System.out.println("Database connection closed.");
             } catch (SQLException ex) {
-                System.err.println("SQL Exception during connection close: " + ex.getMessage());
+                System.out.println(ex.getMessage());
             }
         }
     }

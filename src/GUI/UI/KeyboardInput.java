@@ -19,11 +19,10 @@ public class KeyboardInput implements KeyListener, AssessInput {
     private final WordsDB words;
     private final JFrame parentFrame;
     private final KeyActionFactory keyActionFactory;
-    private final Player player; // Add Player reference
-    private final PlayerDB playerDB; // Add PlayerDB reference
+    private final Player player; 
+    private final PlayerDB playerDB; 
 
-    public KeyboardInput(LetterBox letterBoxes, WordsDB words, JFrame parentFrame, Player player,
-            PlayerDB playerDB) {
+    public KeyboardInput(LetterBox letterBoxes, WordsDB words, JFrame parentFrame, Player player, PlayerDB playerDB) {
         this.words = words;
         this.parentFrame = parentFrame;
         this.boxes = letterBoxes;
@@ -78,7 +77,6 @@ public class KeyboardInput implements KeyListener, AssessInput {
             boxes.clearCurrentRow(Position.getRow());
             Position.setCol(0); // Reset column after clearing
         } else {
-            // Clear row and reset after popup
             showPopup("Not enough letters", "Close");
             boxes.clearCurrentRow(Position.getRow());
             Position.setCol(0); // Reset column after clearing
@@ -86,61 +84,56 @@ public class KeyboardInput implements KeyListener, AssessInput {
     }
 
     // Handles outcome of word submission
-    // Handles outcome of word submission
-private void handleSubmissionOutcome(int result) {
-    if (result == 1) { // Player won the game
-        player.getStats().incrementGamesPlayed(); // Increment only once at the end
-        player.getStats().incrementGamesWon();
-        playerDB.updateScore(player); // Update the score in the database
-        showResultPopup(true);
+    private void endGame(boolean isWin) {
+        player.getStats().incrementGamesPlayed();
+        if (isWin) {
+            player.getStats().incrementGamesWon();
+        }
+        playerDB.updateScore(player); 
+        showResultPopup(isWin);
         resetGame();
-    } else if (result == 0) { // Move to the next row or end game if max attempts reached
-        moveToNextRowOrEndGame();
-    } else { // Invalid word
-        showPopup("Not in wordlist", "Close");
-        boxes.clearCurrentRow(Position.getRow()); // Clear row for invalid word
-        Position.setCol(0); // Reset column
     }
-}
 
+    private void handleSubmissionOutcome(int result) {
+        if (result == 1) { 
+            endGame(true);
+        } else if (result == 0) {
+            moveToNextRowOrEndGame();
+        } else { 
+            showPopup("Not in wordlist", "Close");
+            boxes.clearCurrentRow(Position.getRow()); // Clear row for invalid word
+            Position.setCol(0); // Reset column
+        }
+    }
 
     // Move to the next row or end the game if all rows are filled
     private void moveToNextRowOrEndGame() {
-    if (Position.getRow() < LetterBox.ROWS - 1) {
-        Position.setRow(Position.getRow() + 1);
-    } else {
-        // End game if all attempts are used up
-        player.getStats().incrementGamesPlayed(); // Only increment once at game end
-        playerDB.updateScore(player); // Save updated stats to the database
-        showResultPopup(false);
+        if (Position.getRow() < LetterBox.ROWS - 1) {
+            Position.setRow(Position.getRow() + 1);
+        } else {
+            endGame(false);
+        }
+        Position.setCol(0);
     }
-    Position.setCol(0);
-}
 
     // Resets the game by setting the initial row and column positions and generating a new secret word
     void resetGame() {
         Position.setRow(0);
         Position.setCol(0);
-        words.getSecretWord();
-      
+        words.selectRandomWord();
     }
 
-  // Inside KeyboardInput class
-private void showResultPopup(boolean isWin) {
-    if (parentFrame != null && words != null) {
-        new PopRes(parentFrame, words, isWin, this).setVisible(true);  // Pass `this` as KeyboardInput instance
-    } else {
-        JOptionPane.showMessageDialog(null, "Error: Required components are missing.", "Error", JOptionPane.ERROR_MESSAGE);
+    private void showResultPopup(boolean isWin) {
+        if (parentFrame != null && words != null) {
+            new PopRes(parentFrame, words, isWin, this).setVisible(true);  // Pass `this` as KeyboardInput instance
+        } else {
+            JOptionPane.showMessageDialog(null, "Error: Required components are missing.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
-}
-
-
-
 
     // Displays a popup with a custom message and button
     private void showPopup(String message, String buttonText) {
-        JOptionPane optionPane = new JOptionPane(message, JOptionPane.INFORMATION_MESSAGE,
-                JOptionPane.DEFAULT_OPTION, null, new Object[]{});
+        JOptionPane optionPane = new JOptionPane(message, JOptionPane.INFORMATION_MESSAGE, JOptionPane.DEFAULT_OPTION, null, new Object[]{});
         JDialog dialog = optionPane.createDialog(parentFrame, "Reminder");
 
         // Add close button to dialog

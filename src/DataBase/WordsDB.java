@@ -4,7 +4,6 @@
  */
 package DataBase;
 
-import DataBase.GameDB;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -18,7 +17,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author noooo
+ * @author Noor Swadi 22167422
  */
 
 public class WordsDB extends GameDB {
@@ -110,7 +109,7 @@ public class WordsDB extends GameDB {
     }
 
     // Select a random word from the word list.
-    protected void selectRandomWord() {
+    public void selectRandomWord() {
         List<String> words = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader("./resources/Word_List.txt"))) {
             String line;

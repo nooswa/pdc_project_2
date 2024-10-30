@@ -13,7 +13,7 @@ import java.awt.*;
  *
  * LetterBox panel for arranging SingleBox components in a grid format.
  * 
- * @version Noor Swadi 22167422
+ * @author Noor Swadi 22167422
  */
 public class LetterBox extends JPanel {
 

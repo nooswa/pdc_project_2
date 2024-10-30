@@ -1,12 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package GUI.UI;
 
-/**
- *
- * @author noooo
+/**Handles sign in interface where users enter their email and password in the fields. Navigates to main game 
+ * if successful.
+ *@author Noor Swadi 22167422
+ * @author Larissa Goh 18029695
  */
 import GUI.model.Player;
 import javax.swing.*;
@@ -95,29 +92,22 @@ public class SignInFrame extends JFrame {
         add(backToSignUpButton, gbc);
     }
 
-   private void handleSignIn() {
-    String email = emailField.getText().trim();
-    String password = passwordField.getText().trim();
+    private void handleSignIn() {
+        String email = emailField.getText().trim();
+        String password = passwordField.getText().trim();
 
-    // Attempt to authenticate and retrieve the Player object
-    Player currentPlayer = loginManager.authenticate(email, password);
+        Player currentPlayer = loginManager.authenticate(email, password);
 
-    if (currentPlayer != null) { // Login successful if we get a Player object
-        // Store the player's email in SessionManager
-        SessionManager.setPlayerEmail(email);
-        
-        JOptionPane.showMessageDialog(this, "Login successful!");
+        if (currentPlayer != null) { // Login successful if player objected retrieved
+            SessionManager.setPlayerEmail(email); // Store email
 
-        // Show MainFrame with the authenticated Player
-        Start.showMainFrame(currentPlayer);
+            JOptionPane.showMessageDialog(this, "Login successful!");
 
-        // Close the SignInFrame after successful login
-        this.dispose();
-    } else {
-        // Show an error message if login failed
-        JOptionPane.showMessageDialog(this, "Invalid email or password. Please try again.");
+            Start.showMainFrame(currentPlayer);
+
+            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(this, "Invalid email or password. Please try again.");
+        }
     }
-}
-
-
 }

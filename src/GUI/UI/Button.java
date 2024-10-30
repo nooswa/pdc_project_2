@@ -11,8 +11,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 /**
- *
- * @author Noor Swadi 22167422
+ * Custom button class
+ * @author Noor Swadi  22167422
  *
  */
 public class Button implements MouseListener, AssessInput {
@@ -32,7 +32,6 @@ public class Button implements MouseListener, AssessInput {
         this.boxes = letterBoxes;
         this.words = words;
         this.fatherFrame = fatherFrame;
-
     }
 
     @Override
@@ -41,10 +40,10 @@ public class Button implements MouseListener, AssessInput {
         if (src == rules_hash) {
             pressRules();
         }
+        // Return to letterBox after showing the rules
         boxes.requestFocusInWindow();
     }
 
-    /*WIP PLZ UPDATE*/
     // Private method to display game rules
     private void pressRules() {
         String rulesText = "<html><body style='width: 320px; font-family: Arial, sans-serif; color: #333333; line-height: 1.4;'>"
@@ -67,6 +66,8 @@ public class Button implements MouseListener, AssessInput {
                 "Wordle Rules",
                 JOptionPane.INFORMATION_MESSAGE
         );
+
+        boxes.requestFocusInWindow();
     }
 
     @Override

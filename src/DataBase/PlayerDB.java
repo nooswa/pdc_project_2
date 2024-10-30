@@ -4,7 +4,7 @@
  */
 package DataBase;
 
-import Logic.Player;
+import GUI.model.Player;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -55,7 +55,7 @@ public class PlayerDB extends GameDB {
 
    
     // Check if the login credentials are valid
-    protected boolean checkLogin(String email, String password) {
+    public boolean checkLogin(String email, String password) {
         boolean valid = false;
         String query = "SELECT FULLNAME FROM PLAYERS WHERE EMAIL = ? AND PASSWORD = ?";
         try ( var pstmt = getConn().prepareStatement(query)) {
@@ -153,6 +153,16 @@ public class PlayerDB extends GameDB {
         return player;// Return the loaded player object
     }
     
+    // Clears all entries in Players table (testing purposes)
+    public void clearUsers() {
+    String deleteQuery = "DELETE FROM PLAYERS";
+    try (Statement stmt = getConn().createStatement()) {
+        stmt.executeUpdate(deleteQuery);
+        System.out.println("All users have been deleted from the PLAYERS table.");
+    } catch (SQLException ex) {
+        System.err.println("SQL Exception: " + ex.getMessage());
+    }
+}
     
 
 }

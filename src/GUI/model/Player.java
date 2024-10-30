@@ -6,6 +6,9 @@
 
 package GUI.model;
 
+import GUI.model.PlayerStats;
+import GUI.model.PlayerStats;
+
 /**@author Larissa Goh 18029695
  * @author Noor Swadi 22167422
  * Represents a player in the game, including their personal information and statistics.
@@ -27,11 +30,11 @@ public class Player {
 
     // Player information
 
-    public String getFullname() {
+    public String getFullName() {
         return fullname;
     }
 
-    public void setFullname(String fullname) {
+    public void setFullName(String fullname) {
         this.fullname = fullname;
     }
 

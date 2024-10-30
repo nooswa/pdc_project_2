@@ -4,9 +4,8 @@
  */
 package GUI.UI;
 
-import GUI.model.Position;
-import GUI.UI.LetterBox;
-import GUI.model.SingleBox;
+import GUI.model.LetterBox;
+import DataBase.PlayerDB;
 import DataBase.WordsDB;
 import javax.swing.*;
 import java.awt.event.KeyEvent;
@@ -14,10 +13,9 @@ import java.awt.event.KeyListener;
 
 /**
  *
- * @author Noor Swadi 22167422
- * Responsible for handling keyboard input.
+ * @author Noor Swadi 22167422 Responsible for handling keyboard input.
  */
-public class KeyboardInput implements KeyListener, Enter {
+public class KeyboardInput implements KeyListener, AssessInput {
 
     private LetterBox boxes;
     private SingleBox box;
@@ -66,10 +64,10 @@ public class KeyboardInput implements KeyListener, Enter {
         }
     }
 
-    // Processes the Enter action, checking whether the current word is complete and valid
+    // Processes the AssessInput action, checking whether the current word is complete and valid
     protected void typeEnter() {
         if (Position.getCol() == LetterBox.COLS) {
-            int result = Enter.submit(boxes.getRow(Position.getRow()), words);
+            int result = AssessInput.submit(boxes.getRow(Position.getRow()), words);
             handleSubmissionOutcome(result);
         } else {
             showPopup("Not enough letters", "Close");

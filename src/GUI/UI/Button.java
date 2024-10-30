@@ -4,7 +4,8 @@
  */
 package GUI.UI;
 
-import GUI.UI.LetterBox;
+
+import GUI.model.LetterBox;
 import DataBase.WordsDB;
 import javax.swing.*;
 import java.awt.event.MouseEvent;
@@ -15,7 +16,7 @@ import java.awt.event.MouseListener;
  * @author Noor Swadi 22167422
  * 
  */
-public class Button implements MouseListener, Enter{
+public class Button implements MouseListener, AssessInput{
     JButton rules = null;
     int rules_hash = 0;
 
@@ -67,39 +68,6 @@ public class Button implements MouseListener, Enter{
             JOptionPane.INFORMATION_MESSAGE
         );
     }
-     
-    /*private void pressEnter() {
-    if (Position.getCol() == LetterBox.COLS) {
-        int flag = Enter.submit(boxes.getRow(Position.getRow()), words);
-        if (flag == 1) {
-            PopUpWindow pop = new PopRes(fatherFrame, words, true); // Assuming PopRes needs similar params
-            pop.jb.addActionListener(new ClickRestart(pop, boxes));
-            pop.setVisible(true);
-            Position.setRow(0);
-            Position.setCol(0);
-            words.getSecretWord();
-        } else if (flag == 0) {
-            if (Position.getRow() < LetterBox.ROWS) {
-                if (Position.getRow() == 5) {
-                    PopUpWindow pop = new PopRes(fatherFrame, words, false);
-                    pop.jb.addActionListener(new ClickRestart(pop, boxes));
-                    pop.setVisible(true);
-                } else {
-                    Position.setRow(Position.getRow() + 1);
-                    Position.setCol(0);
-                }
-            }
-        } else {
-            PopUpWindow pop = new PopUpWindow(fatherFrame, "Not in wordlist!", "Close", true, words);
-            pop.setVisible(true);
-        }
-    } else {
-        PopUpWindow pop = new PopUpWindow(fatherFrame, "Not enough letters", "Close", true, words);
-        pop.setVisible(true);
-    }
-    boxes.requestFocusInWindow();
-}*/
-
 
  
     @Override

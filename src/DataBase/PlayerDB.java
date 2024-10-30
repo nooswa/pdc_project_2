@@ -4,15 +4,14 @@
  */
 package DataBase;
 
+import DataBase.GameDB;
 import GUI.model.Player;
-import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 /**
  *
  * @author noooo Responsible for persistent user profiles
@@ -32,7 +31,7 @@ public class PlayerDB extends GameDB {
                     + "EMAIL VARCHAR(255), "
                     + "PASSWORD VARCHAR(255), "
                     + "GAMES_PLAYED INT, "
-                    + "GAMES_WON INT, "
+                    + "GAMES_WON INT"
                     + ")";
 
             try ( Statement statement = getConn().createStatement()) {
@@ -50,13 +49,13 @@ public class PlayerDB extends GameDB {
         statement.executeUpdate("INSERT INTO PLAYERS (FULLNAME, EMAIL, PASSWORD, GAMES_PLAYED, GAMES_WON) VALUES "
                 + "('Alice Smith', 'alice.smith@example.com', 'alice123', 50, 10), "
                 + "('Bob Johnson', 'bob.johnson@example.com', 'bob456', 40, 34),"
-                + "('Carol White', 'carol789', 'carol789', 35, 30),");
+                + "('Carol White', 'carol789', 'carol789', 35, 30)");
         System.out.println("Sample data was added to 'Players' table.");
     }
 
    
     // Check if the login credentials are valid
-    protected boolean checkLogin(String email, String password) {
+    public boolean checkLogin(String email, String password) {
         boolean valid = false;
         String query = "SELECT FULLNAME FROM PLAYERS WHERE EMAIL = ? AND PASSWORD = ?";
         try ( var pstmt = getConn().prepareStatement(query)) {
@@ -72,7 +71,7 @@ public class PlayerDB extends GameDB {
     }
     
     // Register a new user in the PLAYERS table
-    protected boolean registerUser(String fullname, String email, String password) {
+    public boolean registerUser(String fullname, String email, String password) {
         boolean success = false;
         if (!checkLogin(email, password)) {
             String insertQuery = "INSERT INTO PLAYERS (FULLNAME, EMAIL, PASSWORD, GAMES_PLAYED, GAMES_WON) VALUES (?, ?, ?, 0, 0)";
@@ -93,7 +92,7 @@ public class PlayerDB extends GameDB {
     }
     
     // Update the score of a player
-    protected void updateScore(Player player) {
+    public void updateScore(Player player) {
         String updateQuery = "UPDATE PLAYERS SET GAMES_PLAYED = ?, GAMES_WON = ? WHERE EMAIL = ?";
         try ( var pstmt = getConn().prepareStatement(updateQuery)) {
 
@@ -108,7 +107,7 @@ public class PlayerDB extends GameDB {
     }
     
     // Retrieve scores of all players from the PLAYERS table
-    protected ArrayList<Player> getScore() {
+    public ArrayList<Player> getScore() {
         ArrayList<Player> players = new ArrayList<>();
         String query = "SELECT FULLNAME, GAMES_PLAYED, GAMES_WON FROM Players";
         try ( var stmt = getConn().createStatement();  ResultSet rs = stmt.executeQuery(query)) {
@@ -153,5 +152,7 @@ public class PlayerDB extends GameDB {
 
         return player;// Return the loaded player object
     }
+    
+    
 
 }

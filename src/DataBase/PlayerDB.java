@@ -152,16 +152,21 @@ public class PlayerDB extends GameDB {
         return player;// Return the loaded player object
     }
     
-    // Clears all entries in Players table (testing purposes)
-    public void clearUsers() {
-    String deleteQuery = "DELETE FROM PLAYERS";
+    // Deletes a specific user by email from the Players table (testing purposes)
+    public void deleteUserByEmail(String email) {
+    String deleteQuery = "DELETE FROM PLAYERS WHERE email = '" + email.replace("'", "''") + "'";
+    
     try (Statement stmt = getConn().createStatement()) {
-        stmt.executeUpdate(deleteQuery);
-        System.out.println("All users have been deleted from the PLAYERS table.");
+        int rowsDeleted = stmt.executeUpdate(deleteQuery);
+        
+        if (rowsDeleted > 0) {
+            System.out.println("User with email " + email + " has been deleted from the PLAYERS table.");
+        } else {
+            System.out.println("No user with email " + email + " was found in the PLAYERS table.");
+        }
     } catch (SQLException ex) {
         System.err.println("SQL Exception: " + ex.getMessage());
     }
+    }
 }
     
-
-}

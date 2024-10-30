@@ -12,9 +12,10 @@ import javax.swing.border.Border;
 
 /**
  *
- * @author Noor Swadi 22167422 This class serves as a visual unit for displaying
- * letters in the game. It includes logic for changing appearance based on the
- * correctness of the letter.
+ * This class serves as a visual unit for displaying letters in the game.
+ * It includes logic for changing appearance based on the correctness of the letter.
+ * 
+ * @version Noor Swadi 22167422
  */
 public class SingleBox extends JLabel {
 
@@ -26,7 +27,7 @@ public class SingleBox extends JLabel {
     private Border border = null;
     // Border of a single box
 
-    //Initialise a SingleBox instance to an uncheck state.
+    // Initialise a SingleBox instance to an unchecked state
     public SingleBox() {
         border = BorderFactory.createLineBorder(BORDER_GREY, 4);
         this.setBorder(border);
@@ -40,18 +41,18 @@ public class SingleBox extends JLabel {
         this.setForeground(Color.BLACK);
     }
 
-    // Refreshes the box with a new letter and updates its colour based on the type
+    // Refreshes the box with a new letter and updates its color based on the type
     public void refresh(int type, String s) {
         this.setText(s);
         this.setColour(type);
     }
 
-    // Refreshes the box's colour solely based on the type
+    // Refreshes the box's color solely based on the type
     public void refresh(int type) {
         this.setColour(type);
     }
 
-    //Sets the colour of the box based on the type
+    // Sets the color of the box based on the type
     private void setColour(int type) {
         this.setForeground(Color.WHITE);
         if (type == 1) {     // Incorrect = GREY
@@ -72,5 +73,12 @@ public class SingleBox extends JLabel {
             this.setBackground(Color.WHITE);
             this.setForeground(Color.BLACK);
         }
+    }
+
+    // Resets text and colors to default
+    public void reset() {
+        setText("");
+        setBackground(Color.WHITE);
+        setForeground(Color.BLACK);
     }
 }

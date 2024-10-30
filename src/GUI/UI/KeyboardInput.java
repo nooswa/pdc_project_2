@@ -1,55 +1,55 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package GUI.UI;
 
 import GUI.model.LetterBox;
-import DataBase.PlayerDB;
 import DataBase.WordsDB;
 import javax.swing.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 /**
- *
- * @author Noor Swadi 22167422 Responsible for handling keyboard input.
+ * Responsible for handling keyboard input.
+ * @author Noor Swadi 22167422
+ * @author Larissa Goh 18029695
  */
+
 public class KeyboardInput implements KeyListener, AssessInput {
 
-    private LetterBox boxes;
-    private SingleBox box;
-    private WordsDB words;
-    private JFrame parentFrame;
+    private final LetterBox boxes;
+    private final WordsDB words;
+    private final JFrame parentFrame;
     private final KeyActionFactory keyActionFactory;
 
     public KeyboardInput(LetterBox letterBoxes, WordsDB words, JFrame parentFrame) {
         this.words = words;
         this.parentFrame = parentFrame;
         this.boxes = letterBoxes;
-        this.keyActionFactory = new KeyActionFactory(); // Use factory
+        this.keyActionFactory = new KeyActionFactory();
+
+        for (KeyListener listener : boxes.getKeyListeners()) {
+            if (listener instanceof KeyboardInput) {
+                boxes.removeKeyListener(listener);
+            }
+        }
         boxes.addKeyListener(this);
     }
 
     @Override
     public void keyTyped(KeyEvent e) {
         char c = e.getKeyChar();
-        KeyAction action = keyActionFactory.getKeyAction(c); // Use factory directly
-        action.execute(this); // Execute the action
+        KeyAction action = keyActionFactory.getKeyAction(c);
+        action.execute(this);
     }
 
     @Override
-    public void keyPressed(KeyEvent e) {
-    }
+    public void keyPressed(KeyEvent e) {}
 
     @Override
-    public void keyReleased(KeyEvent e) {
-    }
+    public void keyReleased(KeyEvent e) {}
 
     // Types a letter into a box
     protected void typeLetter(char c) {
         if (Position.getCol() < LetterBox.COLS) {
-            box = boxes.getSingleBox(Position.getRow(), Position.getCol());
+            SingleBox box = boxes.getSingleBox(Position.getRow(), Position.getCol());
             box.setText(Character.toString(c));
             Position.setCol(Position.getCol() + 1);
         }
@@ -59,7 +59,7 @@ public class KeyboardInput implements KeyListener, AssessInput {
     protected void typeBackspace() {
         if (Position.getCol() > 0) {
             Position.setCol(Position.getCol() - 1);
-            box = boxes.getSingleBox(Position.getRow(), Position.getCol());
+            SingleBox box = boxes.getSingleBox(Position.getRow(), Position.getCol());
             box.setText(" ");
         }
     }
@@ -69,12 +69,17 @@ public class KeyboardInput implements KeyListener, AssessInput {
         if (Position.getCol() == LetterBox.COLS) {
             int result = AssessInput.submit(boxes.getRow(Position.getRow()), words);
             handleSubmissionOutcome(result);
+            boxes.clearCurrentRow(Position.getRow());
+            Position.setCol(0); // Reset column after clearing
         } else {
+            // Clear row and reset after popup
             showPopup("Not enough letters", "Close");
+            boxes.clearCurrentRow(Position.getRow());
+            Position.setCol(0); // Reset column after clearing
         }
     }
 
-    // Handles outcome of word submissions
+    // Handles outcome of word submission
     private void handleSubmissionOutcome(int result) {
         if (result == 1) {
             showResultPopup(true);
@@ -83,19 +88,19 @@ public class KeyboardInput implements KeyListener, AssessInput {
             moveToNextRowOrEndGame();
         } else {
             showPopup("Not in wordlist", "Close");
+            boxes.clearCurrentRow(Position.getRow()); // Clear row for invalid word
+            Position.setCol(0); // Reset column
         }
     }
 
     // Move to the next row or end the game if all rows are filled
     private void moveToNextRowOrEndGame() {
-        if (Position.getRow() < LetterBox.ROWS) {
-            if (Position.getRow() == 5) {
-                showResultPopup(false);
-            } else {
-                Position.setRow(Position.getRow() + 1);
-                Position.setCol(0);
-            }
+        if (Position.getRow() < LetterBox.ROWS - 1) {
+            Position.setRow(Position.getRow() + 1);
+        } else {
+            showResultPopup(false);
         }
+        Position.setCol(0);
     }
 
     // Resets the game by setting the initial row and column positions and generating a new secret word
@@ -105,16 +110,32 @@ public class KeyboardInput implements KeyListener, AssessInput {
         words.getSecretWord();
     }
 
-    // Displays a result popup based on the game's outcome
     private void showResultPopup(boolean isWin) {
-        PopUpWindow pop = new PopRes(parentFrame, words, isWin);
-        pop.jb.addActionListener(new ClickRestart(pop, boxes));
-        pop.setVisible(true);
+        new PopRes(parentFrame, words, isWin).setVisible(true);
     }
 
     // Displays a popup with a custom message and button
     private void showPopup(String message, String buttonText) {
-        PopUpWindow pop = new PopUpWindow(parentFrame, message, buttonText, true, words);
-        pop.setVisible(true);
+        JOptionPane optionPane = new JOptionPane(message, JOptionPane.INFORMATION_MESSAGE,
+                JOptionPane.DEFAULT_OPTION, null, new Object[]{});
+        JDialog dialog = optionPane.createDialog(parentFrame, "Reminder");
+
+        // Add close button to dialog
+        JButton closeButton = new JButton(buttonText);
+        closeButton.addActionListener(e -> dialog.dispose());
+        optionPane.setOptions(new Object[]{closeButton});
+        dialog.getRootPane().setDefaultButton(closeButton);
+
+        // Refocuses on letter box after dialog closes
+        dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosed(java.awt.event.WindowEvent e) {
+                boxes.clearCurrentRow(Position.getRow());
+                Position.setCol(0);
+                boxes.requestFocusInWindow();
+            }
+        });
+
+        dialog.setVisible(true);
     }
 }

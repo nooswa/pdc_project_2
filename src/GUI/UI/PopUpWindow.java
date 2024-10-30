@@ -68,7 +68,7 @@ public class PopUpWindow extends JDialog {
 // Nested class that disposes of the JDialog when clicked.
 class ClickClose implements ActionListener {
 
-    JDialog window = null;
+    JDialog window;
 
     public ClickClose(JDialog window) {
         this.window = window;
@@ -77,8 +77,15 @@ class ClickClose implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         window.dispose();
+        if (window.getParent() instanceof MainFrame) {
+            // Ensures `LetterBox` gets focus in the MainFrame
+            javax.swing.SwingUtilities.invokeLater(() -> {
+                ((MainFrame) window.getParent()).requestLetterBoxFocus();
+            });
+        }
     }
 }
+
 
 // Nested class that sets the panel and card to display on click.
 class ClickChangeCard implements ActionListener {

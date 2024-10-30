@@ -15,7 +15,7 @@ public class PlayerStatsTest {
 
     @Before
     public void setUp() {
-        playerStats = new PlayerStats(10, 5); // Initializing each test to default with 10 games played, 5 games won
+        playerStats = new PlayerStats(10, 5); // Each test to start  with 10 games played, 5 games won
         System.out.println("SETUP: Games played initialized to: " + playerStats.getGamesPlayed() +
                            ", Games won initialized to: " + playerStats.getGamesWon());
     }

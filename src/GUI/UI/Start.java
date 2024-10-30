@@ -1,16 +1,24 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package GUI.UI;
-
+/**
+ *
+ * @author Noor Swadi 22167422
+ * Method to launch the whole GUI
+ */
 public class Start {
 
     private static SignUpFrame signUpFrame;
     private static SignInFrame signInFrame;
-    private static Main mainFrame;
+    private static MainFrame mainFrame;
 
     public static void main(String[] args) {
         // Initialize frames once
         signUpFrame = new SignUpFrame();
         signInFrame = new SignInFrame();
-        mainFrame = new Main();
+        mainFrame = new MainFrame();
 
         // Show the SignUpFrame first
         showSignUpFrame();

@@ -5,33 +5,36 @@
 package GUI.UI;
 
 import GUI.model.LetterBox;
+import DataBase.PlayerDB;
 import DataBase.WordsDB;
 import javax.swing.*;
-import java.awt.event.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 /**
  *
- * @author Noor Swadi 22167422
- * Responsible for handling keyboard input.
+ * @author Noor Swadi 22167422 Responsible for handling keyboard input.
  */
-public class KeyboardInput implements KeyListener, Enter {
+public class KeyboardInput implements KeyListener, AssessInput {
 
     private LetterBox boxes;
     private SingleBox box;
     private WordsDB words;
     private JFrame parentFrame;
+    private final KeyActionFactory keyActionFactory;
 
     public KeyboardInput(LetterBox letterBoxes, WordsDB words, JFrame parentFrame) {
         this.words = words;
         this.parentFrame = parentFrame;
         this.boxes = letterBoxes;
+        this.keyActionFactory = new KeyActionFactory(); // Use factory
         boxes.addKeyListener(this);
     }
 
     @Override
     public void keyTyped(KeyEvent e) {
         char c = e.getKeyChar();
-        KeyAction action = determineKeyAction(c);
+        KeyAction action = keyActionFactory.getKeyAction(c); // Use factory directly
         action.execute(this); // Execute the action
     }
 
@@ -43,41 +46,7 @@ public class KeyboardInput implements KeyListener, Enter {
     public void keyReleased(KeyEvent e) {
     }
 
-    private KeyAction determineKeyAction(char c) {
-        if (c >= 'A' && c <= 'Z') {
-            return new TypeLetterAction(c);
-        }
-        if (c >= 'a' && c <= 'z') {
-            return new TypeLetterAction(Character.toUpperCase(c));
-        }
-        if (c == KeyEvent.VK_BACK_SPACE) {
-            return new TypeBackspaceAction();
-        }
-        if (c == KeyEvent.VK_ENTER) {
-            return new TypeEnterAction();
-        }
-        return new InvalidKeyAction();
-
-    }
-
-    
-    protected int validateKey(char c) {
-        if (c >= 'A' && c <= 'Z') {
-            return 1;
-        }
-        if (c >= 'a' && c <= 'z') {
-            return 2;
-        }
-        if (c == KeyEvent.VK_BACK_SPACE) {
-            return 3;
-        }
-        if (c == KeyEvent.VK_ENTER) {
-            return 4;
-        }
-        return 0;
-    }
-
-   // Types a letter into a box
+    // Types a letter into a box
     protected void typeLetter(char c) {
         if (Position.getCol() < LetterBox.COLS) {
             box = boxes.getSingleBox(Position.getRow(), Position.getCol());
@@ -86,7 +55,7 @@ public class KeyboardInput implements KeyListener, Enter {
         }
     }
 
-    //Deletes a letter with Backspace
+    // Deletes a letter with Backspace
     protected void typeBackspace() {
         if (Position.getCol() > 0) {
             Position.setCol(Position.getCol() - 1);
@@ -95,10 +64,10 @@ public class KeyboardInput implements KeyListener, Enter {
         }
     }
 
-    // Processes the Enter action, checking whether the current word is complete and valid
+    // Processes the AssessInput action, checking whether the current word is complete and valid
     protected void typeEnter() {
         if (Position.getCol() == LetterBox.COLS) {
-            int result = Enter.submit(boxes.getRow(Position.getRow()), words);
+            int result = AssessInput.submit(boxes.getRow(Position.getRow()), words);
             handleSubmissionOutcome(result);
         } else {
             showPopup("Not enough letters", "Close");
@@ -117,7 +86,6 @@ public class KeyboardInput implements KeyListener, Enter {
         }
     }
 
-    
     // Move to the next row or end the game if all rows are filled
     private void moveToNextRowOrEndGame() {
         if (Position.getRow() < LetterBox.ROWS) {
@@ -130,7 +98,6 @@ public class KeyboardInput implements KeyListener, Enter {
         }
     }
 
-
     // Resets the game by setting the initial row and column positions and generating a new secret word
     private void resetGame() {
         Position.setRow(0);
@@ -138,15 +105,14 @@ public class KeyboardInput implements KeyListener, Enter {
         words.getSecretWord();
     }
 
-   
-    // Displays a result popup based on the games outcome
+    // Displays a result popup based on the game's outcome
     private void showResultPopup(boolean isWin) {
         PopUpWindow pop = new PopRes(parentFrame, words, isWin);
         pop.jb.addActionListener(new ClickRestart(pop, boxes));
         pop.setVisible(true);
     }
 
-    //Displays a popup with a custom message and button
+    // Displays a popup with a custom message and button
     private void showPopup(String message, String buttonText) {
         PopUpWindow pop = new PopUpWindow(parentFrame, message, buttonText, true, words);
         pop.setVisible(true);

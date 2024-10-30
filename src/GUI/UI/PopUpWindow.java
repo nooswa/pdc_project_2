@@ -34,7 +34,7 @@ public class PopUpWindow extends JDialog {
         this.setLayout(null);
         Container c = this.getContentPane();
         _initialize(251, 200, jFrame);
-        JLabel label = Main.makeLabel(text, "Serif", Font.BOLD, 25);
+        JLabel label = MainFrame.makeLabel(text, "Serif", Font.BOLD, 25);
         label.setBounds(25, 25, 201, 30);
         c.add(label);
 
@@ -57,7 +57,7 @@ public class PopUpWindow extends JDialog {
     private void _initialize(int width, int height, JFrame jFrame){
         this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         this.setLocationRelativeTo(jFrame);
-        setBounds((Main.WIDTH - width)/2 + jFrame.getX(), (Main.HEIGHT - height)/2 + jFrame.getY(),
+        setBounds((MainFrame.WIDTH - width)/2 + jFrame.getX(), (MainFrame.HEIGHT - height)/2 + jFrame.getY(),
                 width, height);
 
     }
@@ -125,17 +125,17 @@ class PopRes extends PopUpWindow{
         Container c = this.getContentPane();
         JLabel line1;
         if (win) {
-            line1 = Main.makeLabel("Success", "Serif", Font.BOLD, 40);
+            line1 = MainFrame.makeLabel("Success", "Serif", Font.BOLD, 40);
             line1.setForeground(new Color(121, 167, 107));
-            JLabel line4 = Main.makeLabel("within 「 " + (Position.getRow() + 1) + " 」 tries", "Serif", Font.BOLD, 20);
+            JLabel line4 = MainFrame.makeLabel("within 「 " + (Position.getRow() + 1) + " 」 tries", "Serif", Font.BOLD, 20);
             line4.setForeground(new Color(121, 167, 107));
             line4.setBounds(25, 150, 201, 30);
             c.add(line4);
         } else {
             this.setTitle("Oh no");
-            line1 = Main.makeLabel("Failed", "Serif", Font.BOLD, 40);
+            line1 = MainFrame.makeLabel("Failed", "Serif", Font.BOLD, 40);
             line1.setForeground(new Color(121, 124, 126));
-            JLabel line4 = Main.makeLabel("within 「 " + (Position.getRow() + 1) + " 」 tries", "Serif", Font.BOLD, 20);
+            JLabel line4 = MainFrame.makeLabel("within 「 " + (Position.getRow() + 1) + " 」 tries", "Serif", Font.BOLD, 20);
             line4.setForeground(new Color(198, 180, 102));
             line4.setBounds(25, 150, 201, 30);
             c.add(line4);
@@ -144,12 +144,12 @@ class PopRes extends PopUpWindow{
         line1.setBounds(15, 20, 221, 50);
         c.add(line1);
 
-        JLabel line2 = Main.makeLabel("in guessing", "Serif", Font.PLAIN, 20);
+        JLabel line2 = MainFrame.makeLabel("in guessing", "Serif", Font.PLAIN, 20);
         line2.setForeground(Color.BLACK);
         line2.setBounds(25, 65, 201, 30);
         c.add(line2);
 
-        JLabel line3 = Main.makeLabel(wordsDB.getSecretWord(), "SansSerif", Font.BOLD, 40); // Use the instance variable
+        JLabel line3 = MainFrame.makeLabel(wordsDB.getSecretWord(), "SansSerif", Font.BOLD, 40); // Use the instance variable
         line3.setForeground(Color.BLACK);
         line3.setBounds(25, 95, 201, 50);
         c.add(line3);

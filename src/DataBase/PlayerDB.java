@@ -11,7 +11,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 /**
  *
  * @author noooo Responsible for persistent user profiles
@@ -92,7 +91,7 @@ public class PlayerDB extends GameDB {
     }
     
     // Update the score of a player
-    protected void updateScore(Player player) {
+    public void updateScore(Player player) {
         String updateQuery = "UPDATE PLAYERS SET GAMES_PLAYED = ?, GAMES_WON = ? WHERE EMAIL = ?";
         try ( var pstmt = getConn().prepareStatement(updateQuery)) {
 
@@ -107,7 +106,7 @@ public class PlayerDB extends GameDB {
     }
     
     // Retrieve scores of all players from the PLAYERS table
-    protected ArrayList<Player> getScore() {
+    public ArrayList<Player> getScore() {
         ArrayList<Player> players = new ArrayList<>();
         String query = "SELECT FULLNAME, GAMES_PLAYED, GAMES_WON FROM Players";
         try ( var stmt = getConn().createStatement();  ResultSet rs = stmt.executeQuery(query)) {

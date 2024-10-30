@@ -10,6 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
+ * @author Noor Swadi 22167422
  * Responsible for persistent user profiles
  */
 public class PlayerDB extends GameDB {
@@ -159,7 +160,7 @@ public class PlayerDB extends GameDB {
         }
     }
 
-    // Retrieve the logged-in player's score
+    // Retrieve score of logged in player
     public PlayerStats getLoggedInPlayerScore(String email) {
         PlayerStats stats = null;
         String query = "SELECT GAMES_PLAYED, GAMES_WON FROM PLAYERS WHERE EMAIL = ?";

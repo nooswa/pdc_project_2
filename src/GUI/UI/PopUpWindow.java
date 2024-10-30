@@ -13,11 +13,11 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 
 /**
- *
- * @author Noor Swadi 22167422 This class displays a reminder pop-up with
+ * @author Noor Swadi 22167422
+ * @Larissa Goh 18029695
+ * This class displays a reminder pop-up with
  * customisable text, button, and dimensions.
  */
 public class PopUpWindow extends JDialog {
@@ -33,8 +33,10 @@ public class PopUpWindow extends JDialog {
      * @param text message to display
      * @param buttonText text for the button
      * @param useClickClose if true, adds a ClickClose listener to the button
+     * @param wordsDB
      */
-    public PopUpWindow(JFrame jFrame, String text, String buttonText, boolean useClickClose, WordsDB wordsDB) {
+    public PopUpWindow(JFrame jFrame, String text, String buttonText, boolean useClickClose,
+            WordsDB wordsDB) {
         super(jFrame, "Reminder", true);
         this.wordsDB = wordsDB;
         this.setLayout(null);

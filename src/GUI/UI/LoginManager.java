@@ -5,20 +5,25 @@
 package GUI.UI;
 
 import DataBase.PlayerDB;
+import GUI.model.Player;
 /**
  * @author Larissa Goh 18029695
 * This class manages user authentication between the database and GUI.
  * Ensures sensitive data is protected by and validating logins simultaneously.
  */
 public class LoginManager {
-    private final PlayerDB playerDB;
+    private PlayerDB playerDB;
 
     public LoginManager() {
-        playerDB = new PlayerDB();
+        playerDB = new PlayerDB(); // Initialize PlayerDB
     }
 
-    public boolean authenticate(String email, String password) {
-        return playerDB.checkLogin(email, password); // Calls heck method to verify email and password details
+    // Modify authenticate to return Player instead of boolean
+    public Player authenticate(String email, String password) {
+        // Attempt to load the player based on email and password
+        Player currentPlayer = playerDB.loadPlayer(email, password);
+
+        // If the player is found, return the Player object; otherwise, return null
+        return currentPlayer;
     }
 }
- 

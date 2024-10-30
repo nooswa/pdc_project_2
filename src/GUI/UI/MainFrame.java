@@ -1,11 +1,9 @@
-/* 
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package GUI.UI;
 
+import DataBase.PlayerDB;
 import GUI.model.LetterBox;
 import DataBase.WordsDB;
+import GUI.model.Player;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -23,25 +21,31 @@ public class MainFrame extends JFrame {
     private JLabel titleLabel = null;
     private JLabel version = null;
     private LetterBox letterBox = null;
-    private WordsDB words = null;
+    private final WordsDB words; // Make WordsDB final, so it’s passed once and reused
     private JButton[] jbArray = null;
 
     KeyboardInput input;
+    private final Player player; // Make Player final
+    private final PlayerDB playerDB; // Make PlayerDB final to avoid re-initialization
 
-    public MainFrame() {
+    public MainFrame(Player player, PlayerDB playerDB, WordsDB words) { // Accept PlayerDB and WordsDB as parameters
+        this.player = player;
+        this.playerDB = playerDB; // Reuse passed-in PlayerDB instance
+        this.words = words; // Reuse passed-in WordsDB instance
+        words.getValidWords(); // Load words only once, if not already loaded
+
         this.setTitle("Wordle");
         this.setSize(WIDTH, HEIGHT);
         this.setLocationRelativeTo(null); // Center the frame
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false); // Disable resizing the window
         this.setLayout(null);
-        this.words = new WordsDB();
-        words.getValidWords();
         this.jbArray = new JButton[10];
+        
         this._buildPage();
 
-        // Attach KeyboardInput to letterBox 
-        input = new KeyboardInput(letterBox, words, this);
+        // Attach KeyboardInput to letterBox with player and playerDB
+        input = new KeyboardInput(letterBox, words, this, player, playerDB);
         new Button(jbArray, letterBox, words, this);
 
         // Keep letterBox focused
@@ -103,9 +107,7 @@ public class MainFrame extends JFrame {
         jbArray[1].addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Close current frame
                 dispose(); // Closes the MainFrame
-
                 // Show the SignUpFrame
                 SignUpFrame signUpFrame = new SignUpFrame();
                 signUpFrame.setVisible(true); // Display the SignUpFrame
@@ -116,4 +118,3 @@ public class MainFrame extends JFrame {
         letterBox.requestFocusInWindow();
     }
 }
-

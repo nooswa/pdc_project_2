@@ -8,6 +8,7 @@ package GUI.UI;
  *
  * @author noooo
  */
+import GUI.model.Player;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -94,17 +95,29 @@ public class SignInFrame extends JFrame {
         add(backToSignUpButton, gbc);
     }
 
-    private void handleSignIn() {
-        String email = emailField.getText().trim();
-        String password = passwordField.getText().trim();
+   private void handleSignIn() {
+    String email = emailField.getText().trim();
+    String password = passwordField.getText().trim();
 
-        boolean loginSuccess = loginManager.authenticate(email, password);
+    // Attempt to authenticate and retrieve the Player object
+    Player currentPlayer = loginManager.authenticate(email, password);
+
+    if (currentPlayer != null) { // Login successful if we get a Player object
+        // Store the player's email in SessionManager
+        SessionManager.setPlayerEmail(email);
         
-        if (loginSuccess) {
-            JOptionPane.showMessageDialog(this, "Login successful!");
-            Start.showMainFrame(); // Navigate to Main frame on success
-        } else {
-            JOptionPane.showMessageDialog(this, "Invalid email or password. Please try again.");
-        }
+        JOptionPane.showMessageDialog(this, "Login successful!");
+
+        // Show MainFrame with the authenticated Player
+        Start.showMainFrame(currentPlayer);
+
+        // Close the SignInFrame after successful login
+        this.dispose();
+    } else {
+        // Show an error message if login failed
+        JOptionPane.showMessageDialog(this, "Invalid email or password. Please try again.");
     }
+}
+
+
 }

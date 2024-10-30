@@ -1,19 +1,16 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package DataBase;
 
 import GUI.model.Player;
+import GUI.model.PlayerStats;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 /**
- *
- * @author noooo Responsible for persistent user profiles
+ * Responsible for persistent user profiles
  */
 public class PlayerDB extends GameDB {
 
@@ -33,16 +30,16 @@ public class PlayerDB extends GameDB {
                     + "GAMES_WON INT"
                     + ")";
 
-            try ( Statement statement = getConn().createStatement()) {
+            try (Statement statement = getConn().createStatement()) {
                 statement.executeUpdate(createTableSQL);
                 System.out.println("Players table was created.");
                 insertSampleData(statement);
-            } catch (SQLException ex) { // Handle SQL exceptions
+            } catch (SQLException ex) {
                 Logger.getLogger(PlayerDB.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
-    
+
     // Insert sample player data into the PLAYERS table
     protected void insertSampleData(Statement statement) throws SQLException {
         statement.executeUpdate("INSERT INTO PLAYERS (FULLNAME, EMAIL, PASSWORD, GAMES_PLAYED, GAMES_WON) VALUES "
@@ -52,36 +49,35 @@ public class PlayerDB extends GameDB {
         System.out.println("Sample data was added to 'Players' table.");
     }
 
-   
     // Check if the login credentials are valid
     public boolean checkLogin(String email, String password) {
         boolean valid = false;
         String query = "SELECT FULLNAME FROM PLAYERS WHERE EMAIL = ? AND PASSWORD = ?";
-        try ( var pstmt = getConn().prepareStatement(query)) {
+        try (var pstmt = getConn().prepareStatement(query)) {
             pstmt.setString(1, email);
             pstmt.setString(2, password);
-            ResultSet rs = pstmt.executeQuery();
-            valid = rs.next();
-            rs.close();
-        } catch (SQLException ex) { // Handle SQL exceptions
+            try (ResultSet rs = pstmt.executeQuery()) {
+                valid = rs.next();
+            }
+        } catch (SQLException ex) {
             System.err.println("SQL Exception: " + ex.getMessage());
         }
         return valid;
     }
-    
+
     // Register a new user in the PLAYERS table
     public boolean registerUser(String fullname, String email, String password) {
         boolean success = false;
         if (!checkLogin(email, password)) {
             String insertQuery = "INSERT INTO PLAYERS (FULLNAME, EMAIL, PASSWORD, GAMES_PLAYED, GAMES_WON) VALUES (?, ?, ?, 0, 0)";
-            try ( var pstmt = getConn().prepareStatement(insertQuery)) {
+            try (var pstmt = getConn().prepareStatement(insertQuery)) {
                 pstmt.setString(1, fullname);
                 pstmt.setString(2, email);
                 pstmt.setString(3, password);
                 pstmt.executeUpdate();
                 System.out.println("User " + fullname + " was successfully created.");
                 success = true;
-            } catch (SQLException ex) { // Handle SQL exceptions
+            } catch (SQLException ex) {
                 System.err.println("SQL Exception: " + ex.getMessage());
             }
         } else {
@@ -89,27 +85,25 @@ public class PlayerDB extends GameDB {
         }
         return success;
     }
-    
+
     // Update the score of a player
     public void updateScore(Player player) {
         String updateQuery = "UPDATE PLAYERS SET GAMES_PLAYED = ?, GAMES_WON = ? WHERE EMAIL = ?";
-        try ( var pstmt = getConn().prepareStatement(updateQuery)) {
-
+        try (var pstmt = getConn().prepareStatement(updateQuery)) {
             pstmt.setInt(1, player.getStats().getGamesPlayed());
             pstmt.setInt(2, player.getStats().getGamesWon());
-
             pstmt.setString(3, player.getEmail());
             pstmt.executeUpdate();
-        } catch (SQLException ex) { // Handle SQL exceptions
+        } catch (SQLException ex) {
             System.err.println("SQL Exception: " + ex.getMessage());
         }
     }
-    
+
     // Retrieve scores of all players from the PLAYERS table
     public ArrayList<Player> getScore() {
         ArrayList<Player> players = new ArrayList<>();
-        String query = "SELECT FULLNAME, GAMES_PLAYED, GAMES_WON FROM Players";
-        try ( var stmt = getConn().createStatement();  ResultSet rs = stmt.executeQuery(query)) {
+        String query = "SELECT FULLNAME, GAMES_PLAYED, GAMES_WON FROM PLAYERS";
+        try (var stmt = getConn().createStatement(); ResultSet rs = stmt.executeQuery(query)) {
             while (rs.next()) {
                 players.add(new Player(
                         rs.getString("FULLNAME"),
@@ -119,22 +113,20 @@ public class PlayerDB extends GameDB {
                         rs.getInt("GAMES_WON")
                 ));
             }
-        } catch (SQLException ex) { // Handle SQL exceptions
+        } catch (SQLException ex) {
             System.err.println("SQL Exception: " + ex.getMessage());
         }
-        return players;// Return the list of players
+        return players;
     }
 
     // Load a player by their email and password
-    protected Player loadPlayer(String email, String password) {
+    public Player loadPlayer(String email, String password) {
         Player player = null;
         String query = "SELECT * FROM PLAYERS WHERE EMAIL = ? AND PASSWORD = ?";
-
-        try ( var pstmt = getConn().prepareStatement(query)) {
+        try (var pstmt = getConn().prepareStatement(query)) {
             pstmt.setString(1, email);
             pstmt.setString(2, password);
-
-            try ( ResultSet rs = pstmt.executeQuery()) {
+            try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
                     player = new Player(
                             rs.getString("FULLNAME"),
@@ -145,28 +137,42 @@ public class PlayerDB extends GameDB {
                     );
                 }
             }
-        } catch (SQLException ex) { // Handle SQL exceptions
+        } catch (SQLException ex) {
             System.err.println("SQL Exception: " + ex.getMessage());
         }
+        return player;
+    }
 
-        return player;// Return the loaded player object
-    }
-    
-    // Deletes a specific user by email from the Players table (testing purposes)
+    // Deletes a specific user by email from the PLAYERS table (testing purposes)
     public void deleteUserByEmail(String email) {
-    String deleteQuery = "DELETE FROM PLAYERS WHERE email = '" + email.replace("'", "''") + "'";
-    
-    try (Statement stmt = getConn().createStatement()) {
-        int rowsDeleted = stmt.executeUpdate(deleteQuery);
-        
-        if (rowsDeleted > 0) {
-            System.out.println("User with email " + email + " has been deleted from the PLAYERS table.");
-        } else {
-            System.out.println("No user with email " + email + " was found in the PLAYERS table.");
+        String deleteQuery = "DELETE FROM PLAYERS WHERE EMAIL = ?";
+        try (var pstmt = getConn().prepareStatement(deleteQuery)) {
+            pstmt.setString(1, email);
+            int rowsDeleted = pstmt.executeUpdate();
+            if (rowsDeleted > 0) {
+                System.out.println("User with email " + email + " has been deleted from the PLAYERS table.");
+            } else {
+                System.out.println("No user with email " + email + " was found in the PLAYERS table.");
+            }
+        } catch (SQLException ex) {
+            System.err.println("SQL Exception: " + ex.getMessage());
         }
-    } catch (SQLException ex) {
-        System.err.println("SQL Exception: " + ex.getMessage());
     }
+
+    // Retrieve the logged-in player's score
+    public PlayerStats getLoggedInPlayerScore(String email) {
+        PlayerStats stats = null;
+        String query = "SELECT GAMES_PLAYED, GAMES_WON FROM PLAYERS WHERE EMAIL = ?";
+        try (var pstmt = getConn().prepareStatement(query)) {
+            pstmt.setString(1, email);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    stats = new PlayerStats(rs.getInt("GAMES_PLAYED"), rs.getInt("GAMES_WON"));
+                }
+            }
+        } catch (SQLException ex) {
+            System.err.println("SQL Exception: " + ex.getMessage());
+        }
+        return stats;
     }
 }
-    

@@ -1,10 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package DataBase;
 
-import java.beans.Statement;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
@@ -13,22 +8,23 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 /**
- *
+ * Database connection handler for Wordle game
+ * Ensures a single connection is used across the application.
  * @author noooo
  */
 public class GameDB {
 
-    private static final String username = "wordle2"; //DB username
-    private static final String password = "wordle2"; //DB password
-    private static final String URL = "jdbc:derby:wordleDB; create=true";  //URL of the DB host
-    private static Connection conn = null;
-   
-     
+    private static final String username = "wordle2"; // DB username
+    private static final String password = "wordle2"; // DB password
+    private static final String URL = "jdbc:derby:wordleDB;create=true"; // URL of the DB host
+    private static Connection conn = null; // Single, shared connection instance
+
+    // Constructor
     public GameDB() {
-        dbSetup();// Set up the database connection
+        dbSetup(); // Set up the database connection
     }
-    
-    // Show an error message if database connection fails
+
+    // Display an error message if the database connection fails
     private void showDatabaseError() {
         Object[] options = {"OK"};
         JOptionPane.showOptionDialog(null, "Unable to connect to the database. "
@@ -37,19 +33,27 @@ public class GameDB {
         System.exit(0);
     }
 
-    //Establish connection to database
+    // Establish the connection to the database (only once)
     private void dbSetup() {
-        try {
-            if (conn == null) {
+        if (conn == null) { // Only open the connection if it doesn't already exist
+            try {
                 conn = DriverManager.getConnection(URL, username, password);
-                System.out.println(URL + " get CONNECTED...");
-                System.out.println(getConn());
+                System.out.println(URL + " CONNECTED...");
+            } catch (SQLException ex) {
+                System.err.println("SQL Exception during connection setup: " + ex.getMessage());
+                showDatabaseError();
             }
-        } catch (SQLException ex) {// Handle SQL exceptions
-            System.out.println(ex.getMessage());
         }
     }
-    
+
+    // Get the single, shared connection
+    public static Connection getConn() {
+        if (conn == null) {
+            new GameDB(); // Initialize connection if not already initialized
+        }
+        return conn;
+    }
+
     // Check if a specific table exists in the database
     protected boolean checkTableExisting(String tableName) {
         boolean tableExists = false;
@@ -64,19 +68,15 @@ public class GameDB {
         return tableExists;
     }
 
-    public Connection getConn() {
-        return this.conn;
-    }
-    
-    // Close the database connection
-    public void closeConnections() {
+    // Close the database connection (called on application shutdown)
+    public static void closeConnection() {
         if (conn != null) {
             try {
                 conn.close();
-            } catch (SQLException ex) { // Handle SQL exceptions
-                System.out.println(ex.getMessage());
+                System.out.println("Database connection closed.");
+            } catch (SQLException ex) {
+                System.err.println("SQL Exception during connection close: " + ex.getMessage());
             }
         }
     }
-
 }

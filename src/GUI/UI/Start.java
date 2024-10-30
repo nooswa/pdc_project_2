@@ -1,47 +1,34 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package GUI.UI;
-/**
- *
- * @author Noor Swadi 22167422
- * Method to launch the whole GUI
- */
+
+import DataBase.PlayerDB;
+import DataBase.WordsDB;
+import GUI.model.Player;
+
 public class Start {
 
     private static SignUpFrame signUpFrame;
     private static SignInFrame signInFrame;
     private static MainFrame mainFrame;
+    private static PlayerDB playerDB = new PlayerDB(); // Shared PlayerDB instance
+    private static WordsDB wordsDB = new WordsDB(); // Shared WordsDB instance
 
     public static void main(String[] args) {
-        // Initialize frames once
-        signUpFrame = new SignUpFrame();
-        signInFrame = new SignInFrame();
-        mainFrame = new MainFrame();
-
         // Show the SignUpFrame first
         showSignUpFrame();
     }
 
     public static void showSignUpFrame() {
-        // Hide other frames and show SignUpFrame
-        signInFrame.setVisible(false);
-        mainFrame.setVisible(false);
+        signUpFrame = new SignUpFrame();
         signUpFrame.setVisible(true);
     }
 
     public static void showSignInFrame() {
-        // Hide other frames and show SignInFrame
-        signUpFrame.setVisible(false);
-        mainFrame.setVisible(false);
+        signInFrame = new SignInFrame();
         signInFrame.setVisible(true);
     }
 
-    public static void showMainFrame() {
-        // Hide other frames and show Main
-        signUpFrame.setVisible(false);
-        signInFrame.setVisible(false);
+    public static void showMainFrame(Player player) {
+        mainFrame = new MainFrame(player, playerDB, wordsDB); // Reuse shared PlayerDB and WordsDB
         mainFrame.setVisible(true);
     }
 }

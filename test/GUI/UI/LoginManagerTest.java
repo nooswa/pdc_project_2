@@ -1,6 +1,7 @@
 package GUI.UI;
 
 import DataBase.PlayerDB;
+import GUI.model.Player;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -48,7 +49,7 @@ public class LoginManagerTest {
     @Test
     public void testAuthenticate_ValidCredentials() {
         System.out.println("Testing authenticate with valid credentials");
-        boolean result = loginManager.authenticate(testEmail, testPassword);
+        Player result = loginManager.authenticate(testEmail, testPassword);
         System.out.println("Authentication result: " + result);
         assertTrue("Authentication should succeed with valid credentials", result);
     }
@@ -60,7 +61,7 @@ public class LoginManagerTest {
     public void testAuthenticate_InvalidEmail() {
         System.out.println("Testing authenticate with invalid email");
         String email = "invalid@example.com";
-        boolean result = loginManager.authenticate(email, testPassword);
+        Player result = loginManager.authenticate(email, testPassword);
         System.out.println("Authentication result: " + result);
         assertFalse("Authentication should fail with an incorrect email", result);
     }
@@ -73,7 +74,7 @@ public class LoginManagerTest {
         System.out.println("Testing authenticate with invalid password");
         String email = testEmail;
         String password = "wrongpassword";
-        boolean result = loginManager.authenticate(email, password);
+        Player result = loginManager.authenticate(email, password);
         System.out.println("Authentication result: " + result);
         assertFalse("Authentication should fail with an incorrect password", result);
     }
@@ -86,7 +87,7 @@ public class LoginManagerTest {
         System.out.println("Testing authenticate with invalid email and password");
         String email = "invalid@example.com";
         String password = "wrongpassword";
-        boolean result = loginManager.authenticate(email, password);
+        Player result = loginManager.authenticate(email, password);
         System.out.println("Authentication result: " + result);
         assertFalse("Authentication should fail with both incorrect email and password", result);
     }

@@ -4,7 +4,6 @@
  */
 package DataBase;
 
-import DataBase.GameDB;
 import GUI.model.Player;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -153,6 +152,16 @@ public class PlayerDB extends GameDB {
         return player;// Return the loaded player object
     }
     
+    // Clears all entries in Players table (testing purposes)
+    public void clearUsers() {
+    String deleteQuery = "DELETE FROM PLAYERS";
+    try (Statement stmt = getConn().createStatement()) {
+        stmt.executeUpdate(deleteQuery);
+        System.out.println("All users have been deleted from the PLAYERS table.");
+    } catch (SQLException ex) {
+        System.err.println("SQL Exception: " + ex.getMessage());
+    }
+}
     
 
 }

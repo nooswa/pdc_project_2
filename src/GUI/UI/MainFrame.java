@@ -14,8 +14,7 @@ import java.awt.event.*;
  * @author Noor Swadi 22167422
  * @author Larissa Goh 18029695
  */
-public class MainFrame extends JFrame {
-
+public class MainFrame extends JFrame { 
     public static int WIDTH = 601;
     public static int HEIGHT = 680;
 
@@ -102,6 +101,25 @@ public class MainFrame extends JFrame {
         jbArray[0].setFont(new Font("Segoe UI", Font.BOLD, 18));
         jbArray[0].setBounds(125, 560, 151, 50);
         c.add(jbArray[0]);
+        
+        // Sign Out button setup
+        jbArray[1] = new JButton("SIGN OUT");
+        jbArray[1].setFont(new Font("Segoe UI", Font.BOLD, 18));
+        jbArray[1].setBounds(325, 560, 151, 50); 
+        c.add(jbArray[1]);
+
+        // Add ActionListener to Sign Out button
+        jbArray[1].addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Close current frame
+                dispose(); // Closes the MainFrame
+
+                // Show the SignUpFrame
+                SignUpFrame signUpFrame = new SignUpFrame();
+                signUpFrame.setVisible(true); // Display the SignUpFrame
+            }
+        });
 
         // Sign Out button setup
         jbArray[1] = new JButton("SIGN OUT");
@@ -124,3 +142,4 @@ public class MainFrame extends JFrame {
         letterBox.requestFocusInWindow();
     }
 }
+

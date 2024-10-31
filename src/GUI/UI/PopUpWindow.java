@@ -132,6 +132,7 @@ class PopRes extends PopUpWindow {
         this.mainFrame = jFrame; // Assign the main frame reference
         this.keyboardInput = keyboardInput; // Store keyboardInput reference
 
+
         this.setResizable(false); // Disable resizing
         this.setLayout(null); // Keep null layout for fixed positioning
         this.addWindowListener(new CloseRefresh());
@@ -148,12 +149,14 @@ class PopRes extends PopUpWindow {
         JLabel line1 = MainFrame.makeLabel(win ? "Success" : "Failed", "Serif", Font.BOLD, 40);
         line1.setForeground(win ? new Color(121, 167, 107) : new Color(255, 0, 0));
         line1.setBounds((this.getWidth() - 200) / 2, 20, 200, 50);
+
         c.add(line1);
 
         // Additional message setup
         JLabel line2 = MainFrame.makeLabel("in guessing", "Segoe UI", Font.PLAIN, 16);
         line2.setForeground(Color.BLACK);
         line2.setBounds((this.getWidth() - 120) / 2, 65, 120, 30);
+
         c.add(line2);
 
         // Display the secret word
@@ -165,6 +168,7 @@ class PopRes extends PopUpWindow {
         // Display the number of attempts taken
         JLabel attemptsLabel = MainFrame.makeLabel("Attempts: " + (Position.getRow() + 1), "Segoe UI", Font.PLAIN, 16);
         attemptsLabel.setForeground(Color.BLACK);
+
         attemptsLabel.setBounds((this.getWidth() - 120) / 2, 140, 120, 30);
         c.add(attemptsLabel);
 
@@ -236,6 +240,47 @@ class PopRes extends PopUpWindow {
             signUpFrame.setVisible(true);
         }
 
+
+        // Play Again button setup
+        playAgainButton = new JButton("Play Again"); // Initialize the instance variable
+        playAgainButton.setFont(new Font("Segoe UI", Font.BOLD, 18));
+        playAgainButton.setBounds(85, 290, 130, 50); // Centered horizontally
+        c.add(playAgainButton);
+
+        // Sign Out button setup
+        JButton signOutButton = new JButton("Sign Out");
+        signOutButton.setFont(new Font("Segoe UI", Font.BOLD, 18));
+        signOutButton.setBounds(225, 290, 130, 50); // Centered horizontally next to Play Again button
+        c.add(signOutButton);
+
+        // Adjusting the buttons to be centered in the popup
+        int buttonWidth = 130;
+        int spacing = 20; // Space between the buttons
+        int totalButtonWidth = buttonWidth * 2 + spacing; // Total width of buttons and spacing
+        int startX = (this.getWidth() - totalButtonWidth) / 2; // Calculate starting x for centering
+
+        playAgainButton.setBounds(startX, 290, buttonWidth, 50); // Centered Play Again button
+        signOutButton.setBounds(startX + buttonWidth + spacing, 290, buttonWidth, 50); // Centered Sign Out button
+
+        // Add ActionListener to Sign Out button
+        signOutButton.addActionListener(new SignOutAction());
+    }
+ 
+    // Nested class to handle sign out action
+    private class SignOutAction implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            // Close the main frame
+            mainFrame.dispose(); // Closes the MainFrame
+
+            // Close current PopRes window
+            dispose(); // Closes the PopRes
+
+            // Show the SignUpFrame
+            SignUpFrame signUpFrame = new SignUpFrame();
+            signUpFrame.setVisible(true); // Display the SignUpFrame
+        }
+        
     }
 
     // Nested static class that refreshes the game upon closing the PopUpWindow

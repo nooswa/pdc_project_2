@@ -3,7 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package GUI.UI;
-
 /**
  *
  * @author Noor Swadi 22167422

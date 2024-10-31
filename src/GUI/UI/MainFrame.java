@@ -1,7 +1,6 @@
 package GUI.UI;
 
 import DataBase.PlayerDB;
-import GUI.model.LetterBox;
 import DataBase.WordsDB;
 import GUI.model.Player;
 import javax.swing.*;
@@ -9,29 +8,32 @@ import java.awt.*;
 import java.awt.event.*;
 
 /**
- * This MainFrame class sets up the window for the main game logic and manages keyboard input 
- * 
+ * This MainFrame class sets up the window for the main game logic and manages
+ * keyboard input
+ *
  * @author Noor Swadi 22167422
  * @author Larissa Goh 18029695
  */
-public class MainFrame extends JFrame { 
+public class MainFrame extends JFrame {
+
     public static int WIDTH = 601;
     public static int HEIGHT = 680;
 
-    private JLabel titleLabel = null;
-    private LetterBox letterBox = null;
-    private final WordsDB words; 
-    private JButton[] jbArray = null;
+    private JLabel titleLabel;
+    private LetterBox letterBox;
+    private final WordsDB words;
+    private JButton[] jbArray;
 
     KeyboardInput input;
     private final Player player;
-    private final PlayerDB playerDB; 
+    private final PlayerDB playerDB;
 
-    public MainFrame(Player player, PlayerDB playerDB, WordsDB words) { // Accept PlayerDB and WordsDB as parameters
+    // Parametised constructor
+    public MainFrame(Player player, PlayerDB playerDB, WordsDB words) {
         this.player = player;
         this.playerDB = playerDB;
-        this.words = words; 
-        words.getValidWords(); 
+        this.words = words;
+        words.getValidWords();
         this.setTitle("Wordle");
         this.setSize(WIDTH, HEIGHT);
         this.setLocationRelativeTo(null); // Center the frame
@@ -39,8 +41,8 @@ public class MainFrame extends JFrame {
         this.setResizable(false); // Disable resizing the window
         this.setLayout(null);
         this.jbArray = new JButton[10];
-        
-        this._buildPage();
+
+        this.buildPage();
 
         // Attach KeyboardInput to letterBox with player and playerDB
         input = new KeyboardInput(letterBox, words, this, player, playerDB);
@@ -71,11 +73,17 @@ public class MainFrame extends JFrame {
     public void setVisible(boolean visible) {
         super.setVisible(visible);
         if (visible) {
-            javax.swing.SwingUtilities.invokeLater(() -> letterBox.requestFocusInWindow());
+            javax.swing.SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    letterBox.requestFocusInWindow();
+                }
+            });
         }
     }
 
-    private void _buildPage() {  // Add components
+    // Method to add components
+    private void buildPage() {
         Container c = this.getContentPane();
         letterBox = new LetterBox();
         letterBox.setBounds(133, 130, LetterBox.WIDTH, LetterBox.HEIGHT);
@@ -94,11 +102,11 @@ public class MainFrame extends JFrame {
         jbArray[0].setFont(new Font("Segoe UI", Font.BOLD, 18));
         jbArray[0].setBounds(125, 560, 151, 50);
         c.add(jbArray[0]);
-        
+
         // Sign Out button setup
         jbArray[1] = new JButton("SIGN OUT");
         jbArray[1].setFont(new Font("Segoe UI", Font.BOLD, 18));
-        jbArray[1].setBounds(325, 560, 151, 50); 
+        jbArray[1].setBounds(325, 560, 151, 50);
         c.add(jbArray[1]);
 
         // Add ActionListener to Sign Out button
@@ -106,9 +114,9 @@ public class MainFrame extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose(); // Closes the MainFrame
-                // Show the SignUpFrame
+                // Shows the SignUpFrame
                 SignUpFrame signUpFrame = new SignUpFrame();
-                signUpFrame.setVisible(true); // Display the SignUpFrame
+                signUpFrame.setVisible(true);
             }
         });
 

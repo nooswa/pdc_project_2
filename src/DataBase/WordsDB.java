@@ -18,8 +18,8 @@ import java.util.logging.Logger;
 /**
  *
  * @author Noor Swadi 22167422
+ * Responsible for loading and storing the valid words and secret word from text files
  */
-
 public class WordsDB extends GameDB {
     private final List<String> validWords;  // List to store valid guess words.
     private String secretWord;  // The secret word for the game
@@ -120,7 +120,7 @@ public class WordsDB extends GameDB {
             }
             if (!words.isEmpty()) {
                 secretWord = words.get(new Random().nextInt(words.size()));
-                System.out.println("Secret word for testing: " + secretWord); // Print secret word for testing
+                //System.out.println("Secret word for testing: " + secretWord); // Print secret word for TESTING
             } else {
                 Logger.getLogger(WordsDB.class.getName()).log(Level.SEVERE, "The word list is empty.");
             }

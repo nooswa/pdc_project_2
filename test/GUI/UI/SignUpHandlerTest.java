@@ -1,5 +1,6 @@
 package GUI.UI;
 
+import GUI.model.SignUpHandler;
 import org.junit.Test;
 import static org.junit.Assert.*;
 

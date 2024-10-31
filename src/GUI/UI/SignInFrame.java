@@ -2,9 +2,10 @@ package GUI.UI;
 
 /**Handles sign in interface where users enter their email and password in the fields. Navigates to main game 
  * if successful.
- *@author Noor Swadi 22167422
  * @author Larissa Goh 18029695
  */
+import GUI.model.SessionManager;
+import GUI.model.LoginManager;
 import GUI.model.Player;
 import javax.swing.*;
 import java.awt.*;
@@ -25,7 +26,7 @@ public class SignInFrame extends JFrame {
         setSize(600, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new GridBagLayout());
-        setLocationRelativeTo(null); // Center the frame
+        setLocationRelativeTo(null); 
         initComponents();
     }
 
@@ -86,7 +87,7 @@ public class SignInFrame extends JFrame {
         backToSignUpButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
-                Start.showSignUpFrame(); // Navigate to SignUpFrame
+                Start.showSignUpFrame();
             }
         });
         add(backToSignUpButton, gbc);

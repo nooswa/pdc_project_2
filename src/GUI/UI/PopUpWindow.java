@@ -4,8 +4,8 @@
  */
 package GUI.UI;
 
+import GUI.model.SessionManager;
 import DataBase.PlayerDB;
-import GUI.model.LetterBox;
 import DataBase.WordsDB;
 import GUI.model.PlayerStats;
 import javax.swing.*;
@@ -16,9 +16,8 @@ import java.awt.event.WindowEvent;
 
 /**
  * @author Noor Swadi 22167422
- * @Larissa Goh 18029695
- * This class displays a reminder pop-up with
- * customisable text, button, and dimensions.
+ * @Larissa Goh 18029695 This class displays a reminder pop-up with customisable
+ * text, button, and dimensions.
  */
 public class PopUpWindow extends JDialog {
 
@@ -81,16 +80,15 @@ class ClickClose implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         window.dispose();
-        
+
     }
 }
-
 
 // Nested class that sets the panel and card to display on click.
 class ClickChangeCard implements ActionListener {
 
     JPanel panel = null;
-    String name;    // Destination card name.
+    String name;
 
     public ClickChangeCard(JPanel window, String cardName) {
         this.panel = window;
@@ -104,8 +102,8 @@ class ClickChangeCard implements ActionListener {
 }
 
 // Nested class to restart the geme when clicked
-// Updated ClickRestart to reset the game using KeyboardInput's resetGame method
 class ClickRestart implements ActionListener {
+
     private JDialog window;
     private KeyboardInput keyboardInput;
 
@@ -122,19 +120,18 @@ class ClickRestart implements ActionListener {
     }
 }
 
-
-
 // Nested class for the pop up window that shows when you win or lose
 class PopRes extends PopUpWindow {
 
-    private JFrame mainFrame; // Reference to the main frame
-    private JButton playAgainButton; // Declare playAgainButton as an instance variable
+    private JFrame mainFrame;
+    private JButton playAgainButton;
     private KeyboardInput keyboardInput;
 
     public PopRes(JFrame jFrame, WordsDB wordsDB, boolean win, KeyboardInput keyboardInput) {
-        super(400, 500, jFrame, "Congratulations", wordsDB); // Set larger dimensions
+        super(400, 430, jFrame, "Congratulations", wordsDB);
         this.mainFrame = jFrame; // Assign the main frame reference
         this.keyboardInput = keyboardInput; // Store keyboardInput reference
+
         this.setResizable(false); // Disable resizing
         this.setLayout(null); // Keep null layout for fixed positioning
         this.addWindowListener(new CloseRefresh());
@@ -148,34 +145,27 @@ class PopRes extends PopUpWindow {
         Container c = this.getContentPane();
 
         // Title setup based on win condition
-        JLabel line1;
-        if (win) {
-            line1 = MainFrame.makeLabel("Success", "Serif", Font.BOLD, 40);
-            line1.setForeground(new Color(121, 167, 107));
-        } else {
-            this.setTitle("Oh no");
-            line1 = MainFrame.makeLabel("Failed", "Serif", Font.BOLD, 40);
-            line1.setForeground(new Color(121, 124, 126));
-        }
-        line1.setBounds(100, 20, 200, 50); // Centered within the popup width
+        JLabel line1 = MainFrame.makeLabel(win ? "Success" : "Failed", "Serif", Font.BOLD, 40);
+        line1.setForeground(win ? new Color(121, 167, 107) : new Color(255, 0, 0));
+        line1.setBounds((this.getWidth() - 200) / 2, 20, 200, 50);
         c.add(line1);
 
         // Additional message setup
         JLabel line2 = MainFrame.makeLabel("in guessing", "Segoe UI", Font.PLAIN, 16);
         line2.setForeground(Color.BLACK);
-        line2.setBounds(140, 65, 120, 30); // Centered within the popup width
+        line2.setBounds((this.getWidth() - 120) / 2, 65, 120, 30);
         c.add(line2);
 
         // Display the secret word
         JLabel line3 = MainFrame.makeLabel(wordsDB.getSecretWord(), "Segoe UI", Font.BOLD, 40);
         line3.setForeground(Color.BLACK);
-        line3.setBounds(100, 95, 200, 50); // Centered within the popup width
+        line3.setBounds((this.getWidth() - 200) / 2, 95, 200, 50);
         c.add(line3);
 
         // Display the number of attempts taken
         JLabel attemptsLabel = MainFrame.makeLabel("Attempts: " + (Position.getRow() + 1), "Segoe UI", Font.PLAIN, 16);
         attemptsLabel.setForeground(Color.BLACK);
-        attemptsLabel.setBounds(140, 140, 120, 30); // Centered within the popup width
+        attemptsLabel.setBounds((this.getWidth() - 120) / 2, 140, 120, 30);
         c.add(attemptsLabel);
 
         // Retrieve and display player score
@@ -187,10 +177,10 @@ class PopRes extends PopUpWindow {
         if (stats != null) {
             // Format the score information if stats are available
             scoreText = String.format(
-                "<html>Games Played: %d<br>Games Won: %d<br>Win Rate: %.2f%%</html>",
-                stats.getGamesPlayed(),
-                stats.getGamesWon(),
-                stats.getWinRate()
+                    "<html>Games Played: %d<br>Games Won: %d<br>Win Rate: %.2f%%</html>",
+                    stats.getGamesPlayed(),
+                    stats.getGamesWon(),
+                    stats.getWinRate()
             );
         } else {
             // Display an error message if stats are null
@@ -201,47 +191,56 @@ class PopRes extends PopUpWindow {
         JLabel scoreLabel = new JLabel(scoreText);
         scoreLabel.setFont(new Font("Segoe UI", Font.PLAIN, 16));
         scoreLabel.setForeground(Color.BLACK);
-        scoreLabel.setBounds(140,180, 200, 80); // Positioned below Attempts label
+        scoreLabel.setBounds(0, 180, this.getWidth(), 80); // Set x = 0 and width to this.getWidth() for centering
+        scoreLabel.setHorizontalAlignment(SwingConstants.CENTER);
         c.add(scoreLabel);
-
         // Play Again button setup
         playAgainButton = new JButton("Play Again"); // Initialize the instance variable
         playAgainButton.setFont(new Font("Segoe UI", Font.BOLD, 18));
-        playAgainButton.setBounds(85, 290, 130, 50); // Centered horizontally
+        playAgainButton.setBounds(85, 290, 130, 50);
         c.add(playAgainButton);
 
         // Use ClickRestart with keyboardInput's resetGame method
-        playAgainButton.addActionListener(new ClickRestart(this, keyboardInput)); 
-
+        playAgainButton.addActionListener(new ClickRestart(this, keyboardInput));
         // Sign Out button setup
         JButton signOutButton = new JButton("Sign Out");
         signOutButton.setFont(new Font("Segoe UI", Font.BOLD, 18));
-        signOutButton.setBounds(225, 290, 130, 50); // Centered horizontally next to Play Again button
+        signOutButton.setBounds(225, 290, 130, 50);
         c.add(signOutButton);
+
+        // Adjusting the buttons to be centered in the popup
+        int buttonWidth = 130;
+        int spacing = 20;
+        int totalButtonWidth = buttonWidth * 2 + spacing;
+        int startX = (this.getWidth() - totalButtonWidth) / 2;
+
+        playAgainButton.setBounds(startX, 290, buttonWidth, 50);
+        signOutButton.setBounds(startX + buttonWidth + spacing, 290, buttonWidth, 50);
 
         // Action listener for sign out
         signOutButton.addActionListener(new SignOutAction());
     }
- 
+
     // Nested class to handle sign out action
     private class SignOutAction implements ActionListener {
+
         @Override
         public void actionPerformed(ActionEvent e) {
-            // Close the main frame
+
             mainFrame.dispose(); // Closes the MainFrame
 
-            // Close current PopRes window
             dispose(); // Closes the PopRes
 
             // Show the SignUpFrame
             SignUpFrame signUpFrame = new SignUpFrame();
-            signUpFrame.setVisible(true); // Display the SignUpFrame
+            signUpFrame.setVisible(true);
         }
-        
+
     }
 
     // Nested static class that refreshes the game upon closing the PopUpWindow
     private static class CloseRefresh implements java.awt.event.WindowListener {
+
         @Override
         public void windowOpened(WindowEvent e) {
         }

@@ -4,15 +4,16 @@
  */
 package GUI.UI;
 
-import GUI.model.LetterBox;
 import DataBase.WordsDB;
+import GUI.model.AssessInput;
 import javax.swing.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 /**
  * Custom button class
- * @author Noor Swadi  22167422
+ *
+ * @author Noor Swadi 22167422
  *
  */
 public class Button implements MouseListener, AssessInput {
@@ -44,12 +45,13 @@ public class Button implements MouseListener, AssessInput {
         boxes.requestFocusInWindow();
     }
 
-    // Private method to display game rules
+    // Private method for displaying game rules
     private void pressRules() {
         String rulesText = "<html><body style='width: 320px; font-family: Arial, sans-serif; color: #333333; line-height: 1.4;'>"
                 + "<h2 style='font-size: 22px; color: #444444; font-weight: bold; margin-top: 0;'>Wordle Rules</h2>"
                 + "<p style='font-size: 10px; margin: 5px 0;'>Guess the word in six tries.</p>"
                 + "<p style='font-size: 10px; margin: 5px 0;'>Each guess must be a valid five-letter word.</p>"
+                + "<p style='font-size: 10px; margin: 5px 0;'>Type out your guess and hit Enter to submit it.</p>" // Added instruction
                 + "<p style='font-size: 10px; margin: 5px 0;'>The color of the tiles will change to show how close your guess was:</p>"
                 + "<ul style='list-style-type: none; padding-left: 0; font-size: 10px; margin: 5px 0;'>"
                 + "<li style='margin-bottom: 5px;'>"

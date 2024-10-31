@@ -1,16 +1,18 @@
 package GUI.UI;
 
+import GUI.model.AssessInput;
 import DataBase.PlayerDB;
-import GUI.model.LetterBox;
 import DataBase.WordsDB;
 import GUI.model.Player;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 /**
  * Responsible for handling keyboard input.
- * @author Noor Swadi 22167422
+ *
  * @author Larissa Goh 18029695
  */
 public class KeyboardInput implements KeyListener, AssessInput {
@@ -19,16 +21,16 @@ public class KeyboardInput implements KeyListener, AssessInput {
     private final WordsDB words;
     private final JFrame parentFrame;
     private final KeyActionFactory keyActionFactory;
-    private final Player player; 
-    private final PlayerDB playerDB; 
+    private final Player player;
+    private final PlayerDB playerDB;
 
     public KeyboardInput(LetterBox letterBoxes, WordsDB words, JFrame parentFrame, Player player, PlayerDB playerDB) {
         this.words = words;
         this.parentFrame = parentFrame;
         this.boxes = letterBoxes;
         this.keyActionFactory = new KeyActionFactory();
-        this.player = player; 
-        this.playerDB = playerDB; 
+        this.player = player;
+        this.playerDB = playerDB;
 
         for (KeyListener listener : boxes.getKeyListeners()) {
             if (listener instanceof KeyboardInput) {
@@ -46,10 +48,12 @@ public class KeyboardInput implements KeyListener, AssessInput {
     }
 
     @Override
-    public void keyPressed(KeyEvent e) {}
+    public void keyPressed(KeyEvent e) {
+    }
 
     @Override
-    public void keyReleased(KeyEvent e) {}
+    public void keyReleased(KeyEvent e) {
+    }
 
     // Types a letter into a box
     protected void typeLetter(char c) {
@@ -89,17 +93,17 @@ public class KeyboardInput implements KeyListener, AssessInput {
         if (isWin) {
             player.getStats().incrementGamesWon();
         }
-        playerDB.updateScore(player); 
+        playerDB.updateScore(player);
         showResultPopup(isWin);
         resetGame();
     }
 
     private void handleSubmissionOutcome(int result) {
-        if (result == 1) { 
+        if (result == 1) {
             endGame(true);
         } else if (result == 0) {
             moveToNextRowOrEndGame();
-        } else { 
+        } else {
             showPopup("Not in wordlist", "Close");
             boxes.clearCurrentRow(Position.getRow()); // Clear row for invalid word
             Position.setCol(0); // Reset column
@@ -138,7 +142,14 @@ public class KeyboardInput implements KeyListener, AssessInput {
 
         // Add close button to dialog
         JButton closeButton = new JButton(buttonText);
-        closeButton.addActionListener(e -> dialog.dispose());
+
+        closeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dialog.dispose();
+            }
+        });
+
         optionPane.setOptions(new Object[]{closeButton});
         dialog.getRootPane().setDefaultButton(closeButton);
 
@@ -154,4 +165,5 @@ public class KeyboardInput implements KeyListener, AssessInput {
 
         dialog.setVisible(true);
     }
+
 }

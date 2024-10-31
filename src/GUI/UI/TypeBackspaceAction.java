@@ -9,7 +9,7 @@ import GUI.UI.KeyboardInput;
 /**
  *
  * @author Noor Swadi 22167422
- * mplements KeyAction to handle the backspace action.
+ * Implements KeyAction to handle the backspace action.
  */
 public class TypeBackspaceAction implements KeyAction {
     @Override

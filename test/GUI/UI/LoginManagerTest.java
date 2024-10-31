@@ -1,5 +1,6 @@
 package GUI.UI;
 
+import GUI.model.LoginManager;
 import DataBase.PlayerDB;
 import GUI.model.Player;
 import org.junit.After;

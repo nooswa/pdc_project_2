@@ -4,15 +4,18 @@
  */
 package GUI.UI;
 
+import GUI.model.SignUpHandler;
 import DataBase.PlayerDB;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 /**
+ * 
  * SignUpFrame provides a sign-up interface for new users.
  * It extends JFrame and provides text fields for user details, a sign-up button,
  * and a button to navigate back to the SignIn screen.
+ * @author Larissa Goh 18029695
  */
 public class SignUpFrame extends JFrame {
 

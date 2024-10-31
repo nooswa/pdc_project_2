@@ -120,7 +120,7 @@ public class WordsDB extends GameDB {
             }
             if (!words.isEmpty()) {
                 secretWord = words.get(new Random().nextInt(words.size()));
-                //System.out.println("Secret word for testing: " + secretWord); // Print secret word for TESTING
+                System.out.println("Secret word for testing: " + secretWord); // Print secret word for TESTING
             } else {
                 Logger.getLogger(WordsDB.class.getName()).log(Level.SEVERE, "The word list is empty.");
             }

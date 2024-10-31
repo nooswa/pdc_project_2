@@ -127,13 +127,14 @@ public class KeyboardInput implements KeyListener, AssessInput {
         words.selectRandomWord();
     }
 
-    private void showResultPopup(boolean isWin) {
-        if (parentFrame != null && words != null) {
-            new PopRes(parentFrame, words, isWin, this).setVisible(true);  // Pass `this` as KeyboardInput instance
-        } else {
-            JOptionPane.showMessageDialog(null, "Error: Required components are missing.", "Error", JOptionPane.ERROR_MESSAGE);
-        }
+   private void showResultPopup(boolean isWin) {
+    if (parentFrame != null && words != null) {
+        new PopUpWindow.PopRes(parentFrame, words, isWin, this).setVisible(true);  // Use fully qualified name
+    } else {
+        JOptionPane.showMessageDialog(null, "Error: Required components are missing.", "Error", JOptionPane.ERROR_MESSAGE);
     }
+}
+
 
     // Displays a popup with a custom message and button
     private void showPopup(String message, String buttonText) {
@@ -167,4 +168,6 @@ public class KeyboardInput implements KeyListener, AssessInput {
     }
 
 }
+
+
 

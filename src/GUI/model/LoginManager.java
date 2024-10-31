@@ -1,7 +1,6 @@
 package GUI.model;
 
 import DataBase.PlayerDB;
-import GUI.model.Player;
 
 /**
  * @author Larissa Goh 18029695

@@ -4,8 +4,6 @@
  */
 package GUI.UI;
 
-import GUI.UI.KeyboardInput;
-
 /**
  *
  * @author Noor Swadi 22167422

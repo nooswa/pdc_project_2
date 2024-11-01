@@ -3,8 +3,8 @@
 Our Java-based Wordle game, developed in NetBeans 14 and compatible with Java 11, recreates the popular word-guessing experience within an interactive GUI. Players have six attempts to guess a random secret word, enhancing the classic gameplay with an engaging visual interface. This project incorporates an embedded database using Apache Derby, allowing for the saving and reviewing of game and player histories, making it easy to track past games and scores. We also utilized the JUnit framework for testing.
 
 ## Authors
-- @nooswa
-- @larissagoh
+- [nooswa](https://github.com/nooswa)
+- [larissagoh](https://github.com/larissagoh)
 
 ## Features
 - **Interactive GUI**: Experience smooth and engaging gameplay through an intuitive graphical user interface.

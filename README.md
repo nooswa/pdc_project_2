@@ -17,8 +17,7 @@ Our Java-based Wordle game, developed in NetBeans 14 and compatible with Java 11
 - **Support for Game Rules**: Ensures input validation, hint display, and limits incorrect guesses.
 
 ## Demo
-Check out a demonstration of the game in action: [![Wordle Game Demo](./assets/DemoForReadMe.gif)](https://vimeo.com/1025327007?share=copy)
-
+[![Wordle Game Demo](./assets/DemoForReadMe.gif)](https://vimeo.com/1025327007?share=copy)
 
 ## Build
 

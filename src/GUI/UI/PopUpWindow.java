@@ -57,6 +57,7 @@ public class PopUpWindow extends JDialog {
 
     // Nested class that disposes of the JDialog when clicked.
     static class ClickClose implements ActionListener {
+
         private JDialog window;
 
         public ClickClose(JDialog window) {
@@ -74,7 +75,6 @@ public class PopUpWindow extends JDialog {
 
         private JDialog window;
         private KeyboardInput keyboardInput;
-
 
         public ClickRestart(JDialog window, KeyboardInput keyboardInput) {
             this.window = window;
@@ -172,6 +172,7 @@ public class PopUpWindow extends JDialog {
         }
 
         private class SignOutAction implements ActionListener {
+
             @Override
             public void actionPerformed(ActionEvent e) {
                 mainFrame.dispose();
@@ -183,17 +184,34 @@ public class PopUpWindow extends JDialog {
     }
 
     private static class CloseRefresh implements java.awt.event.WindowListener {
+
         @Override
-        public void windowOpened(WindowEvent e) {}
+        public void windowOpened(WindowEvent e) {
+        }
+
         @Override
         public void windowClosing(WindowEvent e) {
             LetterBox.refresh();
         }
-        @Override public void windowClosed(WindowEvent e) {}
-        @Override public void windowIconified(WindowEvent e) {}
-        @Override public void windowDeiconified(WindowEvent e) {}
-        @Override public void windowActivated(WindowEvent e) {}
-        @Override public void windowDeactivated(WindowEvent e) {}
+
+        @Override
+        public void windowClosed(WindowEvent e) {
+        }
+
+        @Override
+        public void windowIconified(WindowEvent e) {
+        }
+
+        @Override
+        public void windowDeiconified(WindowEvent e) {
+        }
+
+        @Override
+        public void windowActivated(WindowEvent e) {
+        }
+
+        @Override
+        public void windowDeactivated(WindowEvent e) {
+        }
     }
 }
-

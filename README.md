@@ -1,6 +1,6 @@
 # Wordle GUI Game
 
-Our Java-based Wordle game, developed in NetBeans 14 and compatible with Java 11, is an enhancement of our previous CLI-based wordle game by improving the word-guessing experience with an interactive GUI. Players have six attempts to guess a random secret word, enhancing the classic gameplay with an engaging visual interface. This project incorporates an embedded database, allowing for the saving and reviewing of game and player histories, providing players with an overview of their performance. 
+Our Java-based Wordle game, developed in NetBeans 14 and compatible with Java 11, is an enhancement of our previous CLI-based Wordle game by improving the word-guessing experience with an interactive GUI. Players have six attempts to guess a random secret word, enhancing the classic gameplay with an engaging visual interface. This project incorporates an embedded database, allowing for the saving and reviewing of game and player histories, providing players with an overview of their performance. 
 
 ## Authors
 - [nooswa](https://github.com/nooswa)

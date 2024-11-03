@@ -18,7 +18,8 @@ Our Java-based Wordle game, developed in NetBeans 14 and compatible with Java 11
 
 
 ## Demo
-Here is a quick demo of the gameplay. Click on the image for a longer demo.
+Here is a quick demo of the gameplay. 
+**Click on the image for a longer demo**
 
 [![Wordle Game Demo](./assets/DemoForReadMe.gif)](https://vimeo.com/1025327007?share=copy)  
 
